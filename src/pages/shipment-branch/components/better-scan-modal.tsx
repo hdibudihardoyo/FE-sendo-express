@@ -22,7 +22,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
 import {
   ArrowDown,
   ArrowUp,
@@ -105,7 +104,6 @@ export function BetterScanModal({
       // Stop scanner and switch to manual tab
       setIsScannerActive(false);
       setActiveTab("manual");
-      toast.success("QR Code berhasil dipindai!");
     }
   };
 
@@ -127,10 +125,6 @@ export function BetterScanModal({
       };
 
       await scanMutation.mutateAsync(newLogData);
-
-      toast.success(
-        `Paket berhasil discan ${type === "IN" ? "masuk" : "keluar"} cabang`,
-      );
       form.reset();
       onClose();
       onScanComplete?.(newLogData);
@@ -142,7 +136,7 @@ export function BetterScanModal({
           : `Gagal scan ${
               type === "IN" ? "masuk" : "keluar"
             } paket. Silakan coba lagi.`;
-      toast.error(errorMessage);
+      console.log(errorMessage);
     } finally {
       setIsLoading(false);
     }
