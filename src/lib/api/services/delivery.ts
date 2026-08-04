@@ -67,7 +67,7 @@ export const courierShipmentService = {
   ): Promise<CourierShipmentActionResult> {
     try {
       const response = await apiClient.patch<CourierShipmentActionResponse>(
-        `/api/shipments/courier/${trackingNumber}/pick-up`,
+        `/api/shipments/courier/pickup/${trackingNumber}`,
         data,
       );
       return response.data.data;
