@@ -64,7 +64,7 @@ export default function BranchPage() {
     );
   };
 
-  const isLoading = isLoadingBranches || isFetchingBranches;
+  const isLoadingBranch = isLoadingBranches || isFetchingBranches;
 
   if (error) {
     return (
@@ -90,8 +90,8 @@ export default function BranchPage() {
         value={inputName}
         onChange={(e) => setInputName(e.target.value)}
       />
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+      {isLoadingBranch ? (
+         <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-sm">Memuat data cabang...</p>
         </div>

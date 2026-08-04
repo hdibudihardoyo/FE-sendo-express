@@ -7,7 +7,6 @@ import { BetterScanModal } from "./components/better-scan-modal";
 import { useState, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
-import { Loader2 } from "lucide-react";
 import { ArrowDown, ArrowUp, RefreshCircle } from "iconsax-reactjs";
 import {
   useGetAllShipmentBranch,
@@ -16,6 +15,7 @@ import {
 import { PaginationControl } from "@/components/ui/pagination-control";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchParams } from "react-router";
+import { Loader2 } from "lucide-react";
 
 const DEFAULT_LIMIT = 5;
 
@@ -82,7 +82,7 @@ function ShipmentBranchContent() {
     refetch();
   };
 
-  const isLoadingLogs = isLoading || isFetching;
+  const isLoadingShipmentBranch = isLoading || isFetching;
 
   return (
     <Page
@@ -167,11 +167,11 @@ function ShipmentBranchContent() {
         </div>
 
         {/* Data Table */}
-        {isLoadingLogs ? (
+        {isLoadingShipmentBranch ? (
           <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <p className="text-sm">Memuat data pengiriman cabang...</p>
-          </div>
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <p className="text-sm">Memuat data pengiriman cabang...</p>
+        </div>
         ) : (
           <div className="space-y-6">
             <DataTable

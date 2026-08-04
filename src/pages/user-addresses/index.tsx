@@ -64,7 +64,7 @@ export default function UserAddressesPage() {
 
   const userAddresses = data?.data ?? [];
   const paging = data?.paging;
-  const isLoading = loadingUserAddresses || fetchingUserAddresses;
+  const isLoadingAddress = loadingUserAddresses || fetchingUserAddresses;
 
   if (errorUserAddresses) {
     return (
@@ -101,8 +101,8 @@ export default function UserAddressesPage() {
           onChange={(e) => setInputAddress(e.target.value)}
         />
       </div>
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+      {isLoadingAddress ? (
+         <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-sm">Memuat data alamat...</p>
         </div>
