@@ -70,7 +70,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
       const reader = new FileReader();
       reader.onload = (e) => {
         setPhotoPreview(e.target?.result as string);
-      };
+      };  
       reader.readAsDataURL(file);
     }
   };
@@ -114,27 +114,19 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
   };
 
   const handlePick = () => {
-    pickShipment.mutate(shipment.trackingNumber, {
-      onSuccess: () => onActionComplete(),
-    });
+    pickShipment.mutate(shipment.trackingNumber);
   };
 
   const handleDeliverToBranch = () => {
-    deliverToBranch.mutate(shipment.trackingNumber, {
-      onSuccess: () => onActionComplete(),
-    });
+    deliverToBranch.mutate(shipment.trackingNumber);
   };
 
   const handlePickFromBranch = () => {
-    pickFromBranch.mutate(shipment.trackingNumber, {
-      onSuccess: () => onActionComplete(),
-    });
+    pickFromBranch.mutate(shipment.trackingNumber);
   };
 
   const handlePickUpFromBranch = () => {
-    pickUpFromBranch.mutate(shipment.trackingNumber, {
-      onSuccess: () => onActionComplete(),
-    });
+    pickUpFromBranch.mutate(shipment.trackingNumber);
   };
 
   const renderActionButtons = () => {
