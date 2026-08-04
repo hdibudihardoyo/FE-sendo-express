@@ -29,23 +29,34 @@ export const columns = (): ColumnDef<EmployeeBranch>[] => [
     },
   },
   {
-    accessorKey: "user.role",
-    header: "Role",
-    cell: ({ row }) => {
-      const role = row.original.user.role;
-      const roleLabel = role.key === "courier" ? "Kurir" : "Admin";
-      const roleColor =
-        role.key === "courier"
-          ? "bg-blue-100 text-blue-800"
-          : "bg-green-100 text-green-800";
+  accessorKey: "user.role",
+  header: "Role",
+  cell: ({ row }) => {
+     const role = row.original.user.role;
 
-      return (
-        <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${roleColor}`}
-        >
-          {roleLabel}
-        </span>
-      );
+    const roleConfig: Record<string, { label: string; className: string }> = {
+      "admin-branch": {
+        label: "Admin Cabang",
+        className: "bg-blue-100 text-blue-700 border border-blue-200",
+      },
+      courier: {
+        label: "Kurir",
+        className: "bg-orange-100 text-orange-700 border border-orange-200",
+      },
+    };
+
+    const config = roleConfig[role] ?? {
+      label: role,
+      className: "bg-gray-100 text-gray-700 border border-gray-200",
+    };
+
+    return (
+      <span
+        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${config.className}`}
+      >
+        {config.label}
+      </span>
+    );
     },
   },
   {
