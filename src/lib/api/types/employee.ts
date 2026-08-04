@@ -1,5 +1,4 @@
 import type { ApiMeta, Pagination } from "./index";
-import type { Role } from "@/lib/api/types/role";
 
 // Employee related types
 
@@ -10,7 +9,7 @@ export interface EmployeeBranch {
     fullName: string;
     email: string;
     phoneNumber: string;
-    role: Role;
+    role: string;
   };
   branch: {
     id: number;
