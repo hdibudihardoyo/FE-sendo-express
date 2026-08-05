@@ -113,7 +113,7 @@ export const courierShipmentService = {
   ): Promise<CourierShipmentActionResult> {
     try {
       const response = await apiClient.patch<CourierShipmentActionResponse>(
-        `/api/shipments/courier/pickup-from-branch/${trackingNumber}`,
+        `/api/shipments/courier/pickup-from-branches/${trackingNumber}`,
       );
       return response.data.data;
     } catch (error) {

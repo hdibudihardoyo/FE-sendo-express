@@ -1,5 +1,4 @@
 "use client";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -140,7 +139,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             onClick={handlePick}
             disabled={isLoading}
           >
-            Pick
+            Pickup
           </Button>
         );
       case "WAITING_FOR_PICKUP":
@@ -152,7 +151,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             disabled={isLoading}
           >
             <Camera className="w-4 h-4 mr-1" />
-            Konfirmasi Pickup
+            Konfirmasi Paket Dijemput
           </Button>
         );
       case "PICKED_UP":
@@ -166,7 +165,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             Kirim ke Cabang
           </Button>
         );
-      case "IN_TRANSIT":
+      case "READY_TO_PICKUP_AT_BRANCH":
         return (
           <Button
             variant="secondary"
@@ -185,7 +184,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             onClick={handlePickUpFromBranch}
             disabled={isLoading}
           >
-            Siap Kirim
+            Siap di Kirim
           </Button>
         );
       case "ON_THE_WAY_TO_ADDRESS":
@@ -197,14 +196,8 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             disabled={isLoading}
           >
             <Camera className="w-4 h-4 mr-1" />
-            Konfirmasi Terkirim
+            Konfirmasi Paket Diserahkan
           </Button>
-        );
-      case "DELIVERED":
-        return (
-          <Badge variant="darkGreen" className="bg-green-100 text-green-800">
-            Selesai
-          </Badge>
         );
       default:
         return null;
