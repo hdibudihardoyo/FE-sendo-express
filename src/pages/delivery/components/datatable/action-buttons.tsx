@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Camera, Eye, Loader2 } from "lucide-react";
+import { Camera, Eye } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import type { CourierShipmentListItem } from "@/lib/api/types/delivery";

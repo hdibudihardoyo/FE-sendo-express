@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { DataTable } from "./components/datatable";
 import { courierColumns } from "./components/datatable/courier-columns";
 import { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useCourierShipments } from "@/hooks/use-delivery";
 import { Button } from "@/components/ui/button";

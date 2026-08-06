@@ -15,7 +15,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Bar, BarChart, XAxis } from "recharts";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useCourierShipments } from "@/hooks/use-delivery";
-import { toast } from "react-hot-toast";
 
 const Index = () => {
   useMeta(META_DATA.dashboard);

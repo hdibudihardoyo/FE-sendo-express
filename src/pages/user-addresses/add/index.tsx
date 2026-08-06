@@ -127,9 +127,6 @@ export default function AddUserAddressPage() {
     });
   };
 
-  const isSaveDisabled =
-    createUserAddressMutation.isPending || isUploading || isRemoving;
-
   return (
     <main className="px-8 py-6">
       <Breadcrumb>

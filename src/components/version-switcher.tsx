@@ -40,7 +40,7 @@ export function VersionSwitcher({
 							/>
 							<div className="flex flex-col gap-0.5 leading-none">
 								<span className="font-bold text-xl">
-									KirimAja
+									Sendo-Express
 								</span>
 							</div>
 							<ChevronsUpDown className="ml-auto" />

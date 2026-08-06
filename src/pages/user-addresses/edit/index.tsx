@@ -186,9 +186,6 @@ export default function EditUserAddressPage() {
 
   const isUploading = uploadMediaMutation.isPending;
   const isRemoving = removeMediaMutation.isPending;
-  const isSaveDisabled =
-    updateUserAddressMutation.isPending || isUploading || isRemoving;
-
   if (fetchLoading) {
     return (
       <PageShell>

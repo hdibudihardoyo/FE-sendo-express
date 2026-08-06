@@ -19,19 +19,13 @@ interface ActionCellProps {
 
 export function ActionCell({ employee }: ActionCellProps) {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const deleteEmployeeMutation = useDeleteEmployee(employee.id);
 
   const handleDelete = async () => {
-    setIsLoading(true);
     deleteEmployeeMutation.mutate(undefined, {
       onSuccess: () => {
         setDeleteDialogOpen(false);
-        setIsLoading(false);
-      },
-      onError: () => {
-        setIsLoading(false);
       },
     });
   };
