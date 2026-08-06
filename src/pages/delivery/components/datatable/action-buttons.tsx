@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Camera, Eye } from "lucide-react";
+import { Camera, Eye, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import type { CourierShipmentListItem } from "@/lib/api/types/delivery";
@@ -137,7 +137,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="darkGreen"
             size="sm"
             onClick={handlePick}
-            disabled={isLoading}
+            loading={isLoading}
           >
             Pickup
           </Button>
@@ -148,7 +148,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="darkGreen"
             size="sm"
             onClick={() => openPhotoDialog("pickup")}
-            disabled={isLoading}
+            loading={isLoading}
           >
             <Camera className="w-4 h-4 mr-1" />
             Konfirmasi Paket Dijemput
@@ -160,7 +160,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="oranye"
             size="sm"
             onClick={handleDeliverToBranch}
-            disabled={isLoading}
+            loading={isLoading}
           >
             Kirim ke Cabang
           </Button>
@@ -171,7 +171,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="secondary"
             size="sm"
             onClick={handlePickFromBranch}
-            disabled={isLoading}
+            loading={isLoading}
           >
             Ambil dari Cabang
           </Button>
@@ -182,7 +182,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="default"
             size="sm"
             onClick={handlePickUpFromBranch}
-            disabled={isLoading}
+            loading={isLoading}
           >
             Siap di Kirim
           </Button>
@@ -193,7 +193,7 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             variant="darkGreen"
             size="sm"
             onClick={() => openPhotoDialog("deliver")}
-            disabled={isLoading}
+            loading={isLoading}
           >
             <Camera className="w-4 h-4 mr-1" />
             Konfirmasi Paket Diserahkan
@@ -264,9 +264,10 @@ function ActionButtons({ shipment, onActionComplete }: ActionButtonsProps) {
             <Button
               variant="darkGreen"
               onClick={handlePhotoUpload}
+              loading={!selectedPhoto || isLoading}
               disabled={!selectedPhoto || isLoading}
             >
-              {isLoading ? "Mengunggah..." : "Upload"}
+              Upload
             </Button>
           </DialogFooter>
         </DialogContent>

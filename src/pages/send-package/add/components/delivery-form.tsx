@@ -323,9 +323,9 @@ export function DeliveryForm() {
                 <Button
                   type="submit"
                   className="w-full bg-dark-green"
-                  disabled={createShipment.isPending}
+                  loading={createShipment.isPending}
                 >
-                  {createShipment.isPending ? "Memproses..." : "Lanjut"}
+                  Lanjut
                 </Button>
               </div>
             </div>

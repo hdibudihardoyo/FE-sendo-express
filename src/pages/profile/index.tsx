@@ -3,6 +3,7 @@ import { Page } from "@/components/ui/page";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState, useRef, useEffect } from "react";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -204,9 +205,9 @@ const Index = () => {
                       variant="darkGreen"
                       className="px-6 py-2 cursor-pointer"
                       onClick={() => fileInputRef.current?.click()}
-                      disabled={isUploading}
+                      loading={isUploading}
                     >
-                      {isUploading ? "Uploading..." : "Ubah Foto"}
+                      Ubah Foto
                     </Button>
                     <input
                       aria-label="Upload avatar"
@@ -245,11 +246,9 @@ const Index = () => {
                   type="submit"
                   variant="darkGreen"
                   className="py-3 cursor-pointer"
-                  disabled={updateProfileMutation.isPending || isUploading}
+                  loading={updateProfileMutation.isPending || isUploading}
                 >
-                  {updateProfileMutation.isPending
-                    ? "Updating..."
-                    : "Perbarui Profile"}
+                  Perbarui Profile
                 </Button>
               </form>
             </CardContent>
@@ -339,11 +338,9 @@ const Index = () => {
                   type="submit"
                   variant="darkGreen"
                   className="py-3 cursor-pointer"
-                  disabled={updatePasswordMutation.isPending}
+                  loading={updatePasswordMutation.isPending}
                 >
-                  {updatePasswordMutation.isPending
-                    ? "Updating..."
-                    : "Perbarui Password"}
+                  Perbarui Password
                 </Button>
               </form>
             </CardContent>

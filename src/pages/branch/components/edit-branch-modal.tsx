@@ -143,9 +143,9 @@ export function EditBranchModal({
               <Button
                 type="submit"
                 variant="darkGreen"
-                disabled={updateBranchMutation.isPending}
+                loading={updateBranchMutation.isPending}
               >
-                {updateBranchMutation.isPending ? "Menyimpan..." : "Simpan"}
+                Simpan
               </Button>
             </DialogFooter>
           </form>

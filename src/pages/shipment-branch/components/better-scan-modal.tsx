@@ -289,14 +289,14 @@ export function BetterScanModal({
                   <Button
                     type="submit"
                     variant="default"
-                    disabled={isLoading}
+                    loading={isLoading}
                     className={
                       type === "IN"
                         ? "bg-green-600 hover:bg-green-700 text-white"
                         : "bg-blue-600 hover:bg-blue-700 text-white"
                     }
                   >
-                    {isLoading ? "Memproses..." : `Scan ${type}`}
+                    Scan {type}
                   </Button>
                 </DialogFooter>
               </form>

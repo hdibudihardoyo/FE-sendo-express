@@ -85,9 +85,9 @@ const Index = () => {
                   variant="darkGreen"
                   className="w-full"
                   onClick={handleTrack}
-                  disabled={trackShipment.isPending}
+                  loading={trackShipment.isPending}
                 >
-                  {trackShipment.isPending ? "Melacak..." : "Lacak"}
+                  Lacak
                 </Button>
 
                 <p className="text-sm text-secondary mt-3 text-center">

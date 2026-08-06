@@ -130,9 +130,9 @@ export function AddBranchModal({ onBranchAdded }: AddBranchModalProps) {
               <Button
                 type="submit"
                 variant="darkGreen"
-                disabled={createBranchMutation.isPending}
+                loading={createBranchMutation.isPending}
               >
-                {createBranchMutation.isPending ? "Menyimpan..." : "Simpan"}
+                Simpan
               </Button>
             </DialogFooter>
           </form>

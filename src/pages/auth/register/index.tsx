@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { TruckFast, Profile, Sms, Lock1, LockSlash } from "iconsax-reactjs";
+import { Loader2 } from "lucide-react";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -198,11 +199,11 @@ export default function RegisterPage() {
                 <div className="pt-1">
                   <Button
                     type="submit"
-                    disabled={isRegistering}
+                    loading={isRegistering}
                     className="w-full h-10 text-sm font-semibold rounded-xl cursor-pointer"
                     style={{ background: "rgba(20,54,50,1)", color: "#fff" }}
                   >
-                    {isRegistering ? "Memproses..." : "Daftar"}
+                    Daftar
                   </Button>
                 </div>
 

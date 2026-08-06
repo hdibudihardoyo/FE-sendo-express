@@ -5,6 +5,9 @@ import { toast } from "react-hot-toast";
 export const useUploadMedia = () => {
   return useMutation({
     mutationFn: (file: File) => mediaService.uploadSingle(file),
+    onSuccess: () => {
+      toast.success("Gambar berhasil diunggah!");
+    },
     onError: (error: Error) => {
       const errorMessage =
         error.message || "Gagal mengunggah gambar. Silakan coba lagi.";

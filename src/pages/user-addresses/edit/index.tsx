@@ -282,12 +282,10 @@ export default function EditUserAddressPage() {
                 <Button
                   variant="darkGreen"
                   type="submit"
-                  disabled={isSaveDisabled}
+                  loading={updateUserAddressMutation.isPending}
                   className="w-full"
                 >
-                  {updateUserAddressMutation.isPending
-                    ? "Menyimpan..."
-                    : "Simpan Perubahan"}
+                  Simpan Perubahan
                 </Button>
               </div>
             </div>
@@ -318,7 +316,7 @@ export default function EditUserAddressPage() {
                         size="sm"
                         className="absolute top-2 right-2 h-8 w-8 p-0 rounded-full"
                         onClick={handleRemovePhoto}
-                        disabled={isRemoving}
+                        loading={isRemoving}
                         aria-label="Hapus gambar"
                       >
                         ×
@@ -350,16 +348,11 @@ export default function EditUserAddressPage() {
                   type="button"
                   variant="outline"
                   disabled={isUploading || isRemoving}
+                  loading={isUploading || isRemoving}
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full"
                 >
-                  {isUploading
-                    ? "Mengunggah..."
-                    : isRemoving
-                      ? "Menghapus..."
-                      : photoPreview
-                        ? "Ganti Gambar"
-                        : "Pilih Gambar"}
+                  {photoPreview ? "Ganti Gambar" : "Pilih Gambar"}
                 </Button>
               </div>
             </div>

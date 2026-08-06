@@ -170,16 +170,9 @@ export function ActionCell({ role, onDataChange }: ActionCellProps) {
                 <Button
                   type="submit"
                   variant="darkGreen"
-                  disabled={updateMutation.isPending}
+                  loading={updateMutation.isPending}
                 >
-                  {updateMutation.isPending ? (
-                    <>
-                      <Loader2 className="animate-spin" />
-                      Menyimpan...
-                    </>
-                  ) : (
-                    "Simpan"
-                  )}
+                  Simpan
                 </Button>
               </DialogFooter>
             </form>

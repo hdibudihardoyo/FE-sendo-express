@@ -28,7 +28,6 @@ const Index = () => {
 
   const handleActionComplete = () => {
     refetch();
-    toast.success("Data pengiriman berhasil diperbarui.");
   };
 
   const chartData = [

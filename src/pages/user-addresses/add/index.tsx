@@ -99,7 +99,6 @@ export default function AddUserAddressPage() {
         shouldDirty: true,
       });
       setUploadedPublicId(result.publicId);
-      toast.success("Gambar berhasil diunggah!");
     } catch {
       resetPhotoState();
     }
@@ -281,16 +280,11 @@ export default function AddUserAddressPage() {
                   type="button"
                   variant="outline"
                   disabled={isUploading || isRemoving}
+                  loading={isUploading || isRemoving}
                   onClick={() => fileInputRef.current?.click()}
                   className="w-full"
                 >
-                  {isUploading
-                    ? "Mengunggah..."
-                    : isRemoving
-                      ? "Menghapus..."
-                      : photoPreview
-                        ? "Ganti Gambar"
-                        : "Pilih Gambar"}
+                  {photoPreview ? "Ganti Gambar" : "Pilih Gambar"}
                 </Button>
               </div>
             </div>
@@ -301,10 +295,10 @@ export default function AddUserAddressPage() {
             <Button
               variant="darkGreen"
               type="submit"
-              disabled={isSaveDisabled}
+              loading={createUserAddressMutation.isPending}
               className="w-full"
             >
-              {createUserAddressMutation.isPending ? "Menyimpan..." : "Simpan"}
+              Simpan
             </Button>
           </div>
         </form>

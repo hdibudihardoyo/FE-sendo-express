@@ -65,9 +65,9 @@ export function ActionCell({ employee }: ActionCellProps) {
               <Button
                 variant="destructive"
                 onClick={handleDelete}
-                disabled={isLoading}
+                loading={deleteEmployeeMutation.isPending}
               >
-                {deleteEmployeeMutation.isPending ? "Menghapus..." : "Hapus"}
+                Hapus
               </Button>
             </DialogFooter>
           </DialogContent>

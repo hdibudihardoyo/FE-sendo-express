@@ -62,7 +62,6 @@ export default function DeliveryPage() {
 
   const handleRefresh = () => {
     refetch();
-    toast.success("Data pengiriman berhasil diperbarui.");
   };
 
   const isLoadingShipmentsCourier = isLoading || isFetching;

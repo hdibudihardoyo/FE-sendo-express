@@ -70,9 +70,9 @@ export function BranchActionCell({
               <Button
                 variant="destructive"
                 onClick={handleDelete}
-                disabled={deleteBranchMutation.isPending}
+                loading={deleteBranchMutation.isPending}
               >
-                {deleteBranchMutation.isPending ? "Menghapus..." : "Hapus"}
+                Hapus
               </Button>
             </DialogFooter>
           </DialogContent>

@@ -251,9 +251,9 @@ export function AddEmployeeModal({ onEmployeeAdded }: AddEmployeeModalProps) {
               <Button
                 type="submit"
                 variant="darkGreen"
-                disabled={createEmployeeMutation.isPending}
+                loading={createEmployeeMutation.isPending}
               >
-                {createEmployeeMutation.isPending ? "Menyimpan..." : "Simpan"}
+                Simpan
               </Button>
             </DialogFooter>
           </form>

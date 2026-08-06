@@ -135,18 +135,11 @@ export default function LoginPage() {
                 <div className="pt-1">
                   <Button
                     type="submit"
-                    disabled={isLoggingIn}
+                    loading={isLoggingIn}
                     className="w-full h-10 text-sm font-semibold rounded-xl cursor-pointer"
                     style={{ background: "rgba(20,54,50,1)", color: "#fff" }}
                   >
-                    {isLoggingIn ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                        Memproses...
-                      </span>
-                    ) : (
-                      "Masuk"
-                    )}
+                    Masuk
                   </Button>
                 </div>
 
