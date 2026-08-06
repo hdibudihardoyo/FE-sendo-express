@@ -242,28 +242,30 @@ export function BetterScanModal({
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="isReadyToPickup"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel className="text-sm font-medium">
-                          Siap untuk Pickup
-                        </FormLabel>
-                        <p className="text-xs text-muted-foreground">
-                          Centang jika paket sudah siap untuk dijemput
-                        </p>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                {type === "OUT" && (
+                  <FormField
+                    control={form.control}
+                    name="isReadyToPickup"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <div className="space-y-1 leading-none">
+                          <FormLabel className="text-sm font-medium">
+                            Siap untuk Pickup
+                          </FormLabel>
+                          <p className="text-xs text-muted-foreground">
+                            Centang jika paket sudah siap untuk dijemput
+                          </p>
+                        </div>
+                      </FormItem>
+                    )}
+                  />
+                )}
 
                 <div className="bg-blue-50 p-3 rounded-lg">
                   <div className="flex items-center gap-2 text-blue-700">

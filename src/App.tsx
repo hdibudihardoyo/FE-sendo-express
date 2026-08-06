@@ -68,7 +68,7 @@ function App() {
         <Route
           path="/branch"
           element={
-            <AuthGuard requiredAuth={true} role="super_admin">
+            <AuthGuard requiredAuth={true} role="super-admin">
               <BranchPage />
             </AuthGuard>
           }
@@ -78,7 +78,7 @@ function App() {
         <Route
           path="/role"
           element={
-            <AuthGuard requiredAuth={true} role="super_admin">
+            <AuthGuard requiredAuth={true} role="super-admin">
               <RolePage />
             </AuthGuard>
           }
@@ -90,7 +90,7 @@ function App() {
           element={
             <AuthGuard
               requiredAuth={true}
-              roles={["super_admin", "admin_branch"]}
+              roles={["super-admin", "admin-branch"]}
             >
               <EmployeePage />
             </AuthGuard>
@@ -111,7 +111,7 @@ function App() {
           element={
             <AuthGuard
               requiredAuth={true}
-              roles={["super_admin", "admin_branch", "courier"]}
+              roles={["super-admin", "courier"]}
             >
               <DeliveryPage />
             </AuthGuard>
@@ -194,7 +194,7 @@ function App() {
           element={
             <AuthGuard
               requiredAuth={true}
-              roles={["admin_branch", "super_admin"]}
+              roles={["admin-branch", "super-admin"]}
             >
               <ShipmentBranchPage />
             </AuthGuard>
