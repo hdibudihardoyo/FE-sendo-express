@@ -406,11 +406,7 @@ const DetailPage = () => {
                   <div className="space-y-3">
                     <div className="bg-gray-50 rounded-xl p-4 overflow-hidden">
                       <img
-                        src={
-                          import.meta.env.VITE_API_BASE_URL +
-                          "/" +
-                          shipment.shipmentDetail.pickupProof
-                        }
+                        src={shipment.shipmentDetail.pickupProof}
                         alt="Bukti Penjemputan"
                         className="w-full h-auto max-h-96 object-contain rounded-lg"
                         onError={(e) => {
@@ -445,11 +441,7 @@ const DetailPage = () => {
                   <div className="space-y-3">
                     <div className="bg-gray-50 rounded-xl p-4 overflow-hidden">
                       <img
-                        src={
-                          import.meta.env.VITE_API_BASE_URL +
-                          "/" +
-                          shipment.shipmentDetail.receiptProof
-                        }
+                        src={shipment.shipmentDetail.receiptProof}
                         alt="Bukti Penerimaan"
                         className="w-full h-auto max-h-96 object-contain rounded-lg"
                         onError={(e) => {

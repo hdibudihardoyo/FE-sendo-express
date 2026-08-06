@@ -42,5 +42,8 @@ export const useScanShipmentBranch = () => {
       toast.success("Paket berhasil discan!");
       queryClient.invalidateQueries({ queryKey: shipmentBranchKeys.lists() });
     },
+    onError: () => {
+      toast.error("Paket sudah pernah discan. Pemindaian ulang tidak diperbolehkan.");
+    }
   });
 };
