@@ -1,12 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CARD_CLASS } from "../constants";
-
 type AlertCardProps = {
   alerts: string[];
 };
 
 export const AlertCard = ({ alerts }: AlertCardProps) => (
-  <Card className={CARD_CLASS}>
+  <Card className="rounded-2xl border border-border/60 shadow-sm">
     <CardHeader className="pb-2">
       <CardTitle className="text-base">Alert Penting</CardTitle>
       <CardDescription>Notifikasi operasi yang perlu perhatian cepat.</CardDescription>

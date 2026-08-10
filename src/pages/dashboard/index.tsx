@@ -4,11 +4,20 @@ import { Page } from "@/components/ui/page";
 import { TruckTime } from "iconsax-reactjs";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useAuth } from "@/hooks/use-auth";
-import { CARD_CLASS, SECTION_GAP, DASHBOARD_TITLES } from "./constants";
 import { SuperAdminDashboard } from "./views/super-admin-dashboard";
 import { AdminBranchDashboard } from "./views/admin-branch-dashboard";
 import { CourierDashboard } from "./views/courier-dashboard";
 import { CustomerDashboard } from "./views/customer-dashboard";
+
+const CARD_CLASS = "rounded-2xl border border-border/60 shadow-sm";
+const SECTION_GAP = "gap-4";
+
+const DASHBOARD_TITLES: Record<string, string> = {
+  "super-admin": "Dashboard Super Admin",
+  "admin-branch": "Dashboard Cabang",
+  courier: "Dashboard Kurir",
+  customer: "Dashboard Pelanggan",
+};
 
 const Index = () => {
   useMeta(META_DATA.dashboard);
