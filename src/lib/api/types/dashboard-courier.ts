@@ -48,8 +48,8 @@ export interface Points {
     type: string;
     name: string;
     address: string;
-    latitude: number;
-    longitude: number;
+    latitude: number | null;
+    longitude: number | null;
 }
 
 export interface CourierRouteMap {
@@ -63,7 +63,7 @@ export interface CourierRouteMap {
 
 export interface CourierRouteMapResponse {
     meta: ApiMeta;
-    data: CourierRouteMap;
+    data: CourierRouteMap[];
 }
 
 export interface Timeline {

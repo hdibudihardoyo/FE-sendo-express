@@ -104,18 +104,15 @@ export interface HighQueueBranch {
 }
 
 export interface DashboardAlerts{
-    expiredPayments: {
-        total: number;
-        items: ExpiredPayment[]
-  },
-    stuckPackages: {
-        total: number;
-        items: StuckPackage[]
-  },
-    highQueueBranches: {
-        total: number;
-        items: HighQueueBranch[]
-  }
+    expiredPayments: { 
+        total: number; 
+        items: ExpiredPayment[] 
+    };
+    stuckPackages: { 
+        total: number; 
+        items: StuckPackage[] 
+    };
+    highQueueBranches: HighQueueBranch[];
 }
 
 export interface DashboardAlertsResponse {

@@ -46,8 +46,8 @@ export const CourierDashboard = () => {
 
   const courierTasks = taskListRes?.data ?? [];
   const onGoingPackages = onGoingRes?.data ?? [];
-  const route = routeMapRes?.data;
-
+  const route = routeMapRes?.data?.[0];
+  
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) setPhotoPreview(URL.createObjectURL(file));

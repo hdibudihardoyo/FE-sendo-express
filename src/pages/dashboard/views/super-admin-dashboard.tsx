@@ -152,8 +152,9 @@ export const SuperAdminDashboard = () => {
     [shipmentsRes]
   );
 
-  const alertMessages = useMemo(() => {
+const alertMessages = useMemo(() => {
     const a = alertsRes?.data;
+
     if (!a) return [];
 
     const expired = a.expiredPayments.items.map(
@@ -161,15 +162,14 @@ export const SuperAdminDashboard = () => {
     );
 
     const stuck = a.stuckPackages.items.map(
-      (p) => `Paket ${p.trackingNumber} tertahan di status "${p.deliveryStatus}" selama ${p.hoursStuck} jam.`
-    );
+      (p) => `Paket ${p.trackingNumber} tertahan di status "${p.deliveryStatus}" selama ${p.hoursStuck} jam.`);
 
-    const highQueue = a.highQueueBranches.items.map(
+    const highQueue = a.highQueueBranches.map(
       (b) => `Cabang ${b.branchName} memiliki ${numberFormatter.format(b.queuedPackages)} paket menumpuk dalam antrean.`
-    );
+  );
 
-    return [...expired, ...stuck, ...highQueue];
-  }, [alertsRes]);
+  return [...expired, ...stuck, ...highQueue];
+}, [alertsRes]);
 
   return (
     <>
