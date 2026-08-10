@@ -56,7 +56,7 @@ const CHART_CONFIG = {
   volume: { label: "Volume", color: "var(--chart-2, #3b82f6)" },
 } satisfies Record<string, { label: string; color: string }>;
 
-export const SuperAdminDashboard = () => {
+export const SuperAdminDashboardPage = () => {
   const [revenueDays, setRevenueDays] = useState(7);
   const [branchLimit] = useState(6);
   const [paymentStatusFilter] = useState("ALL");

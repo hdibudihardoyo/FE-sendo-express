@@ -19,7 +19,7 @@ const TASK_LIST_LIMIT = 10;
 
 const todayIso = () => new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
-export const CourierDashboard = () => {
+export const CourierDashboardPage = () => {
   const [activeTaskAction, setActiveTaskAction] = useState<TaskAction>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 

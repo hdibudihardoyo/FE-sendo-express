@@ -4,10 +4,10 @@ import { Page } from "@/components/ui/page";
 import { TruckTime } from "iconsax-reactjs";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useAuth } from "@/hooks/use-auth";
-import { SuperAdminDashboard } from "./views/super-admin-dashboard";
-import { AdminBranchDashboard } from "./views/admin-branch-dashboard";
-import { CourierDashboard } from "./views/courier-dashboard";
-import { CustomerDashboard } from "./views/customer-dashboard";
+import { SuperAdminDashboardPage } from "./views/super-admin-dashboard";
+import { AdminBranchDashboardPage } from "./views/admin-branch-dashboard";
+import { CourierDashboardPage } from "./views/courier-dashboard";
+import { CustomerDashboardPage } from "./views/customer-dashboard";
 
 const CARD_CLASS = "rounded-2xl border border-border/60 shadow-sm";
 const SECTION_GAP = "gap-4";
@@ -16,7 +16,7 @@ const DASHBOARD_TITLES: Record<string, string> = {
   "super-admin": "Dashboard Super Admin",
   "admin-branch": "Dashboard Cabang",
   courier: "Dashboard Kurir",
-  customer: "Dashboard Pelanggan",
+  customer: "Dashboard Customer",
 };
 
 const Index = () => {
@@ -39,13 +39,13 @@ const Index = () => {
   const renderDashboard = () => {
     switch (role) {
       case "super-admin":
-        return <SuperAdminDashboard />;
+        return <SuperAdminDashboardPage />;
       case "admin-branch":
-        return <AdminBranchDashboard />;
+        return <AdminBranchDashboardPage />;
       case "courier":
-        return <CourierDashboard />;
+        return <CourierDashboardPage />;
       case "customer":
-        return <CustomerDashboard />;
+        return <CustomerDashboardPage />;
       default:
         return (
           <Card className={`${CARD_CLASS} text-center`}>

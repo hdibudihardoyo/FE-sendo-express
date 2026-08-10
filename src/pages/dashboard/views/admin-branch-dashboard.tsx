@@ -29,7 +29,7 @@ const SCAN_LOG_LIMIT = 8;
 
 const numberFormatter = new Intl.NumberFormat("id-ID");
 
-export const AdminBranchDashboard = () => {
+export const AdminBranchDashboardPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const scanLogPage = Number(searchParams.get("page") || 1);
 

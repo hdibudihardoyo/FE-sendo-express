@@ -16,7 +16,7 @@ const SECTION_GAP = "gap-4";
 
 const HISTORY_LIMIT = 6;
 
-export const CustomerDashboard = () => {
+export const CustomerDashboardPage = () => {
   const [trackingNumber, setTrackingNumber] = useState("");
 
   const [searchParams, setSearchParams] = useSearchParams();
