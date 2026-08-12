@@ -20,7 +20,9 @@ import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useTrackShipment } from "@/hooks/use-shipment";
+import type { DeliveryStatus } from "@/lib/api/types/shipment";
 import {
+  getPackageTypeLabel,
   getStatusLabel,
   getStatusIcon,
   getStatusBadgeVariant,
@@ -132,8 +134,11 @@ const Index = () => {
                               Jenis Paket
                             </h3>
                             <p className="font-semibold capitalize">
-                              {shipment.shipmentDetail?.packageType ||
-                                "Tidak tersedia"}
+                              {shipment.shipmentDetail?.packageType
+                                ? getPackageTypeLabel(
+                                    shipment.shipmentDetail.packageType,
+                                  )
+                                : "Tidak tersedia"}
                             </p>
                           </div>
                         </div>
@@ -319,7 +324,9 @@ const Index = () => {
                         )}
                       </div>
                       <div className="space-y-2 flex-1">
-                        <h2 className="font-semibold">{history.status}</h2>
+                        <h2 className="font-semibold">
+                          {getStatusLabel(history.status as DeliveryStatus)}
+                        </h2>
                         <p className="text-sm text-secondary">
                           {formatDate(history.createdAt)}
                         </p>

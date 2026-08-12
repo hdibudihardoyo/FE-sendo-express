@@ -8,6 +8,7 @@ import {
 import { Box, I3DCubeScan, TruckTime } from "iconsax-reactjs";
 import { useCourierShipment } from "@/hooks/use-delivery";
 import {
+  getPackageTypeLabel,
   getStatusBadgeVariant,
   getStatusIcon,
   getStatusLabel,
@@ -80,7 +81,9 @@ const Detail = ({ trackingNumber, isOpen, onClose }: DetailProps) => {
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-500">Jenis Paket</p>
                   <p className="font-medium text-sm capitalize">
-                    {shipment.packageType || "-"}
+                    {shipment.packageType
+                      ? getPackageTypeLabel(shipment.packageType)
+                      : "-"}
                   </p>
                 </div>
               </div>

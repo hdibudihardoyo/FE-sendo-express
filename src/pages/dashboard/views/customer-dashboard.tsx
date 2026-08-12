@@ -19,6 +19,7 @@ import {
   useShipmentHistory,
 } from "@/hooks/use-dashboard-customer";
 import { useTrackShipment } from "@/hooks/use-shipment";
+import type { DeliveryStatus } from "@/lib/api/types/shipment";
 import {
   getStatusLabel,
   getStatusBadgeVariant,
@@ -73,12 +74,12 @@ export const CustomerDashboardPage = () => {
     data: activeRes,
     isLoading: isActiveLoading,
     isFetching: isActiveFetching,
-  } = useActiveShipments({ page: activePage, limit: activeLimit  });
+  } = useActiveShipments({ page: activePage, limit: activeLimit });
   const {
     data: historyRes,
     isLoading: isHistoryLoading,
     isFetching: isHistoryFetching,
-  } = useShipmentHistory({ page: historyPage, limit: historyLimit  });
+  } = useShipmentHistory({ page: historyPage, limit: historyLimit });
 
   const activeShipments = activeRes?.data ?? [];
   const historyItems = historyRes?.data ?? [];
@@ -125,7 +126,7 @@ export const CustomerDashboardPage = () => {
                     key={item.shipmentId}
                     className="flex items-center gap-3 rounded-xl bg-muted/30 p-4"
                   >
-                    {item.deliveryStatus === "Delivered" ? (
+                    {item.deliveryStatus === "DELIVERED" ? (
                       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-background text-muted-foreground">
                         <Camera size={18} variant="Bold" />
                       </div>
@@ -142,9 +143,15 @@ export const CustomerDashboardPage = () => {
                             )}
                           </div>
                         </div>
-                        <span className="rounded-full bg-background px-3 py-1 text-xs">
-                          {item.deliveryStatus}
-                        </span>
+                        <Badge
+                          variant={getStatusBadgeVariant(
+                            item.deliveryStatus as DeliveryStatus,
+                          )}
+                        >
+                          {getStatusLabel(
+                            item.deliveryStatus as DeliveryStatus,
+                          )}
+                        </Badge>
                       </div>
                       <div className="mt-1 flex items-center justify-between gap-3">
                         <span className="text-sm text-muted-foreground">
@@ -273,7 +280,9 @@ export const CustomerDashboardPage = () => {
                         </div>
                       </div>
                       <span className="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-                        {shipment.deliveryStatus}
+                        {getStatusLabel(
+                          shipment.deliveryStatus as DeliveryStatus,
+                        )}
                       </span>
                     </div>
                     <div className="grid gap-2 md:grid-cols-2">

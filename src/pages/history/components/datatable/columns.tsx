@@ -5,6 +5,7 @@ import { HistoryActionCell } from "./history-action-cell";
 import type { History } from "@/lib/api/types/history";
 import type { DeliveryStatus } from "@/lib/api/types/shipment";
 import {
+  getPackageTypeLabel,
   getStatusBadgeVariant,
   getStatusLabel,
 } from "@/lib/utils/status-utils";
@@ -22,11 +23,14 @@ export const columns: ColumnDef<History>[] = [
   {
     accessorKey: "packageType",
     header: "Jenis Paket",
-    cell: ({ row }) => (
-      <div className="text-sm capitalize">
-        {(row.getValue("packageType") as string)?.toLowerCase()}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const packageType = row.getValue("packageType") as string | undefined;
+      return (
+        <div className="text-sm capitalize">
+          {packageType ? getPackageTypeLabel(packageType) : "-"}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createdAt",

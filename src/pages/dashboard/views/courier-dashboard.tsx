@@ -11,6 +11,8 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { PaginationControl } from "@/components/ui/pagination-control";
 import { Location } from "iconsax-reactjs";
+import { getStatusLabel } from "@/lib/utils/status-utils";
+import type { DeliveryStatus } from "@/lib/api/types/shipment";
 import type { TaskAction } from "../types";
 import { TaskActionDialog } from "../components/task-action-dialog";
 import {
@@ -177,7 +179,7 @@ export const CourierDashboardPage = () => {
                           "bg-background text-muted-foreground"
                         }`}
                       >
-                        {task.deliveryStatus}
+                        {getStatusLabel(task.deliveryStatus as DeliveryStatus)}
                       </span>
                     </div>
                     <div className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
@@ -283,7 +285,7 @@ export const CourierDashboardPage = () => {
                       {route.trackingNumber}
                     </span>
                     <span className="ml-auto shrink-0 rounded-full bg-background px-2 py-0.5 text-xs">
-                      {route.deliveryStatus}
+                      {getStatusLabel(route.deliveryStatus as DeliveryStatus)}
                     </span>
                   </div>
                   <p className="mb-3 text-xs text-muted-foreground">
@@ -349,7 +351,7 @@ export const CourierDashboardPage = () => {
                       {pkg.trackingNumber}
                     </span>
                     <span className="shrink-0 rounded-full bg-muted px-2.5 py-1 text-[11px] text-muted-foreground">
-                      {pkg.deliveryStatus}
+                      {getStatusLabel(pkg.deliveryStatus as DeliveryStatus)}
                     </span>
                   </div>
                   <div className="mb-3 truncate text-xs text-muted-foreground sm:text-sm">
@@ -366,7 +368,7 @@ export const CourierDashboardPage = () => {
                         </div>
                         <div className="min-w-0">
                           <div className="text-sm font-medium">
-                            {step.status}
+                            {getStatusLabel(step.status as DeliveryStatus)}
                           </div>
                           <div className="text-xs text-muted-foreground sm:text-sm">
                             {step.description}

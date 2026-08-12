@@ -35,6 +35,8 @@ import {
   useRecentShipments,
   useDashboardAlerts,
 } from "@/hooks/use-dashboard-superadmin";
+import { getStatusLabel, formatPaymentStatus } from "@/lib/utils/status-utils";
+import type { DeliveryStatus, PaymentStatus } from "@/lib/api/types/shipment";
 
 const DEFAULT_SHIPMENT_LIMIT = 10;
 const DEFAULT_ALERT_LIMIT = 10;
@@ -191,7 +193,7 @@ export const SuperAdminDashboardPage = () => {
   const statusDistribution = useMemo(
     () =>
       (statusRes?.data ?? []).map((s) => ({
-        name: s.status,
+        name: getStatusLabel(s.status as DeliveryStatus),
         value: s.count,
       })),
     [statusRes],
@@ -212,8 +214,8 @@ export const SuperAdminDashboardPage = () => {
       (shipmentsRes?.data ?? []).map((sh) => ({
         tracking: sh.trackingNumber,
         branch: sh.currentBranch,
-        status: sh.deliveryStatus,
-        payment: sh.paymentStatus,
+        status: getStatusLabel(sh.deliveryStatus as DeliveryStatus),
+        payment: formatPaymentStatus(sh.paymentStatus as PaymentStatus),
       })),
     [shipmentsRes],
   );

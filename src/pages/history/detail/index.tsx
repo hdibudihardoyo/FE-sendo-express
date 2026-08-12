@@ -22,9 +22,11 @@ import { useParams, useNavigate } from "react-router";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useHistoryById } from "@/hooks/use-history";
 import {
+  getDeliveryTypeLabel,
   getStatusBadgeVariant,
   getStatusLabel,
   getStatusIcon,
+  getPackageTypeLabel,
 } from "@/lib/utils/status-utils";
 
 const DetailHistoryPage = () => {
@@ -170,7 +172,9 @@ const DetailHistoryPage = () => {
                   <div>
                     <h3 className="text-sm text-secondary">Jenis Pengiriman</h3>
                     <p className="font-semibold capitalize">
-                      {shipment.deliveryType}
+                      {shipment.deliveryType
+                        ? getDeliveryTypeLabel(shipment.deliveryType)
+                        : "Tidak tersedia"}
                     </p>
                   </div>
                 </div>
@@ -192,7 +196,9 @@ const DetailHistoryPage = () => {
                   <div>
                     <h3 className="text-sm text-secondary">Jenis Paket</h3>
                     <p className="font-semibold capitalize">
-                      {shipment.packageType?.toLowerCase() ?? "Tidak tersedia"}
+                      {shipment.packageType
+                        ? getPackageTypeLabel(shipment.packageType)
+                        : "Tidak tersedia"}
                     </p>
                   </div>
                 </div>
