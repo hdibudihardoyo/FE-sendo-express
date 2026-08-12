@@ -15,7 +15,7 @@ import { useEmployees } from "@/hooks/use-employee";
 import { PaginationControl } from "@/components/ui/pagination-control";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchParams } from "react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { EmployeeBranchFilters } from "@/lib/api/types/employee";
 import { Loader2 } from "lucide-react";
 
@@ -42,32 +42,40 @@ export default function EmployeePage() {
   const [filterField, setFilterField] =
     useState<FilterField>(detectFilterField());
   const [inputValue, setInputValue] = useState(
-    searchParams.get(filterField) ?? "",
+    searchParams.get(detectFilterField()) ?? "",
   );
 
   const debouncedSearch = useDebounce(inputValue, 500);
-  const isFirstRender = useRef(true);
+  const currentFilterValue = searchParams.get(filterField) ?? "";
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
+    setInputValue(searchParams.get(filterField) ?? "");
+  }, [filterField, searchParams]);
 
-    const currentLimit = searchParams.get("limit") ?? String(DEFAULT_LIMIT);
-    const params: Record<string, string> = {
-      page: "1",
-      limit: currentLimit,
-    };
-    if (debouncedSearch) {
-      params[filterField] = debouncedSearch;
-    }
-    setSearchParams(params, { replace: true });
-  }, [debouncedSearch, filterField]);
+  useEffect(() => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (debouncedSearch) {
+          next.set(filterField, debouncedSearch);
+        } else {
+          next.delete(filterField);
+        }
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
+        if (debouncedSearch !== currentFilterValue) {
+          next.set("page", "1");
+        }
+        return next;
+      },
+      { replace: true },
+    );
+  }, [debouncedSearch, filterField, currentFilterValue]);
 
   const handleFilterFieldChange = (value: FilterField) => {
     setFilterField(value);
-    setInputValue("");
+    setInputValue(searchParams.get(value) ?? "");
   };
 
   const currentPage = Number(searchParams.get("page") ?? 1);
@@ -78,6 +86,9 @@ export default function EmployeePage() {
       (prev) => {
         const next = new URLSearchParams(prev);
         next.set("page", String(page));
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
         return next;
       },
       { replace: true },

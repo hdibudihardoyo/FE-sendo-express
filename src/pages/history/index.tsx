@@ -36,12 +36,14 @@ export default function HistoryPage() {
         if (!next.get("limit")) {
           next.set("limit", String(DEFAULT_LIMIT));
         }
-        next.set("page", "1");
+        if (debouncedTrackingNumber !== trackingNumberParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedTrackingNumber]);
+  }, [debouncedTrackingNumber, trackingNumberParam]);
 
   const {
     data,
@@ -62,6 +64,9 @@ export default function HistoryPage() {
       (prev) => {
         const next = new URLSearchParams(prev);
         next.set("page", String(newPage));
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
         return next;
       },
       { replace: true },

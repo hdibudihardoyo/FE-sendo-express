@@ -18,6 +18,7 @@ export default function DeliveryPage() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
+  const limit = Number(searchParams.get("limit") || LIMIT);
   const trackingNumberParam = searchParams.get("trackingNumber") ?? "";
 
   const [inputSearch, setInputSearch] = useState(trackingNumberParam);
@@ -32,17 +33,22 @@ export default function DeliveryPage() {
         } else {
           next.delete("trackingNumber");
         }
-        next.set("page", "1");
+        if (!next.get("limit")) {
+          next.set("limit", String(LIMIT));
+        }
+        if (debouncedSearch !== trackingNumberParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedSearch]);
+  }, [debouncedSearch, trackingNumberParam]);
 
   const { data, error, isLoading, isFetching, refetch } = useCourierShipments({
     trackingNumber: debouncedSearch || undefined,
     page,
-    limit: LIMIT,
+    limit,
   });
 
   const shipments = data?.data ?? [];
@@ -53,6 +59,9 @@ export default function DeliveryPage() {
       (prev) => {
         const next = new URLSearchParams(prev);
         next.set("page", String(newPage));
+        if (!next.get("limit")) {
+          next.set("limit", String(LIMIT));
+        }
         return next;
       },
       { replace: true },

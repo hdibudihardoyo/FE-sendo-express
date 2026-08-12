@@ -49,12 +49,14 @@ function ShipmentBranchContent() {
         if (!next.get("limit")) {
           next.set("limit", String(DEFAULT_LIMIT));
         }
-        next.set("page", "1");
+        if (debouncedSearch !== trackingNumberParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedSearch]);
+  }, [debouncedSearch, trackingNumberParam]);
 
   const { data, isLoading, isFetching, refetch } = useGetAllShipmentBranch({
     trackingNumber: debouncedSearch || undefined,
@@ -72,6 +74,9 @@ function ShipmentBranchContent() {
       (prev) => {
         const next = new URLSearchParams(prev);
         next.set("page", String(newPage));
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
         return next;
       },
       { replace: true },
@@ -169,9 +174,9 @@ function ShipmentBranchContent() {
         {/* Data Table */}
         {isLoadingShipmentBranch ? (
           <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
-          <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          <p className="text-sm">Memuat data pengiriman cabang...</p>
-        </div>
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <p className="text-sm">Memuat data pengiriman cabang...</p>
+          </div>
         ) : (
           <div className="space-y-6">
             <DataTable

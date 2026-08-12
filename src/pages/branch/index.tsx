@@ -32,12 +32,14 @@ export default function BranchPage() {
         if (!next.get("limit")) {
           next.set("limit", String(DEFAULT_LIMIT));
         }
-        next.set("page", "1");
+        if (debouncedName !== nameParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedName]);
+  }, [debouncedName, nameParam]);
 
   const {
     data,
@@ -58,6 +60,9 @@ export default function BranchPage() {
       (prev) => {
         const next = new URLSearchParams(prev);
         next.set("page", String(newPage));
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
         return next;
       },
       { replace: true },
@@ -91,7 +96,7 @@ export default function BranchPage() {
         onChange={(e) => setInputName(e.target.value)}
       />
       {isLoadingBranch ? (
-         <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+        <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-sm">Memuat data cabang...</p>
         </div>

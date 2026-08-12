@@ -14,14 +14,14 @@ import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
-const DEFAULT_LIMIT = 10;
+const DEFAULT_LIMIT = 2;
 
 export default function UserAddressesPage() {
   useMeta(META_DATA["user-addresses"]);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get("page") || 1);
-  const [limit] = useState(Number(searchParams.get("limit")) || DEFAULT_LIMIT);
+  const limit = Number(searchParams.get("limit") || DEFAULT_LIMIT);
   const addressParam = searchParams.get("address") ?? "";
   const [inputAddress, setInputAddress] = useState(addressParam);
   const debouncedAddress = useDebounce(inputAddress, 400);
@@ -38,17 +38,27 @@ export default function UserAddressesPage() {
         if (!next.get("limit")) {
           next.set("limit", String(DEFAULT_LIMIT));
         }
-        next.set("page", "1");
+        if (debouncedAddress !== addressParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedAddress]);
+  }, [debouncedAddress, addressParam]);
 
   const handlePageChange = (newPage: number) => {
-    const next = new URLSearchParams(searchParams);
-    next.set("page", String(newPage));
-    setSearchParams(next, { replace: true });
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set("page", String(newPage));
+        if (!next.get("limit")) {
+          next.set("limit", String(DEFAULT_LIMIT));
+        }
+        return next;
+      },
+      { replace: true },
+    );
   };
 
   const {
@@ -102,7 +112,7 @@ export default function UserAddressesPage() {
         />
       </div>
       {isLoadingAddress ? (
-         <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
+        <div className="flex flex-col items-center justify-center h-64 gap-3 text-muted-foreground">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
           <p className="text-sm">Memuat data alamat...</p>
         </div>

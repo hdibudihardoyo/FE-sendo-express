@@ -38,12 +38,14 @@ export default function SendPackagePage() {
         if (!next.get("limit")) {
           next.set("limit", String(DEFAULT_LIMIT));
         }
-        next.set("page", "1");
+        if (debouncedSearch !== trackingNumberParam) {
+          next.set("page", "1");
+        }
         return next;
       },
       { replace: true },
     );
-  }, [debouncedSearch]);
+  }, [debouncedSearch, trackingNumberParam]);
 
   const { data, isLoading, isFetching, error } = useShipments({
     trackingNumber: debouncedSearch || undefined,
