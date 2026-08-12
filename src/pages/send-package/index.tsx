@@ -12,7 +12,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { PaginationControl } from "@/components/ui/pagination-control";
 import { Loader2 } from "lucide-react";
 
-const DEFAULT_LIMIT = 5;
+const DEFAULT_LIMIT = 10;
 
 export default function SendPackagePage() {
   useMeta(META_DATA["send-package"]);

@@ -51,7 +51,8 @@ const Index = () => {
           <Card className={`${CARD_CLASS} text-center`}>
             <CardContent className="p-8">
               <p className="text-sm text-muted-foreground">
-                Role tidak dikenali. Silakan periksa kembali informasi akun Anda.
+                Role tidak dikenali. Silakan periksa kembali informasi akun
+                Anda.
               </p>
             </CardContent>
           </Card>
@@ -68,7 +69,9 @@ const Index = () => {
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary-foreground/70">
                 Selamat datang,
               </p>
-              <h1 className="mt-1 text-2xl font-semibold">{user?.fullName ?? "Pengguna"}</h1>
+              <h1 className="mt-1 text-2xl font-semibold">
+                {user?.fullName ?? "Pengguna"}
+              </h1>
             </div>
             <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10">
               <TruckTime size={28} variant="Bold" />

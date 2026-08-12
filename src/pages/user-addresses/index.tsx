@@ -14,7 +14,7 @@ import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
-const DEFAULT_LIMIT = 5;
+const DEFAULT_LIMIT = 10;
 
 export default function UserAddressesPage() {
   useMeta(META_DATA["user-addresses"]);

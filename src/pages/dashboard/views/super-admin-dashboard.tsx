@@ -1,7 +1,13 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { ChartContainer } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { PaginationControl } from "@/components/ui/pagination-control";
@@ -18,7 +24,6 @@ import {
   YAxis,
   Cell,
 } from "recharts";
-import { ArrowDown, ArrowUp, RefreshCircle } from "iconsax-reactjs";
 import { KpiCards } from "../components/kpi-cards";
 import { AlertCard } from "../components/alert-card";
 import {
@@ -31,7 +36,8 @@ import {
   useDashboardAlerts,
 } from "@/hooks/use-dashboard-superadmin";
 
-const DEFAULT_SHIPMENT_LIMIT = 8;
+const DEFAULT_SHIPMENT_LIMIT = 10;
+const DEFAULT_ALERT_LIMIT = 10;
 
 // Formatter angka & mata uang Indonesia
 const currencyFormatter = new Intl.NumberFormat("id-ID", {
@@ -41,9 +47,9 @@ const currencyFormatter = new Intl.NumberFormat("id-ID", {
 });
 const numberFormatter = new Intl.NumberFormat("id-ID");
 
-// Style tokens
 const CARD_CLASS = "rounded-2xl border border-border/60 shadow-sm";
 const SECTION_GAP = "gap-4";
+
 const STATUS_COLORS = [
   "var(--chart-1, #22c55e)",
   "var(--chart-2, #3b82f6)",
@@ -51,6 +57,7 @@ const STATUS_COLORS = [
   "var(--chart-4, #ef4444)",
   "var(--chart-5, #a855f7)",
 ];
+
 const CHART_CONFIG = {
   revenue: { label: "Revenue", color: "var(--chart-1, #22c55e)" },
   volume: { label: "Volume", color: "var(--chart-2, #3b82f6)" },
@@ -58,59 +65,118 @@ const CHART_CONFIG = {
 
 export const SuperAdminDashboardPage = () => {
   const [revenueDays, setRevenueDays] = useState(7);
-  const [branchLimit] = useState(6);
+  const [volumeBranchLimit] = useState(5);
   const [paymentStatusFilter] = useState("ALL");
-
   const [searchParams, setSearchParams] = useSearchParams();
-  const shipmentPage = Number(searchParams.get("page") || 1);
-  const shipmentLimit = Number(searchParams.get("limit") || DEFAULT_SHIPMENT_LIMIT);
+  const shipmentPage = Number(searchParams.get("shipmentPage") || 1);
+  const shipmentLimit = Number(
+    searchParams.get("shipmentLimit") || DEFAULT_SHIPMENT_LIMIT,
+  );
+  const alertPage = Number(searchParams.get("alertPage") || 1);
+  const alertLimit = Number(
+    searchParams.get("alertLimit") || DEFAULT_ALERT_LIMIT,
+  );
 
   const handleShipmentPageChange = (newPage: number) => {
     setSearchParams(
       (prev) => {
         const next = new URLSearchParams(prev);
-        next.set("page", String(newPage));
-        if (!next.get("limit")) {
-          next.set("limit", String(DEFAULT_SHIPMENT_LIMIT));
+        next.set("shipmentPage", String(newPage));
+        if (!next.get("shipmentLimit")) {
+          next.set("shipmentLimit", String(DEFAULT_SHIPMENT_LIMIT));
         }
         return next;
       },
-      { replace: true }
+      { replace: true },
     );
   };
 
-  const { data: summaryRes, isLoading: isSummaryLoading } = useDashboardSummary();
-  const { data: revenueRes, isLoading: isRevenueLoading } = useDailyRevenueChart(revenueDays);
-  const { data: volumeRes, isLoading: isVolumeLoading } = useVolumeByBranch(branchLimit);
-  const { data: statusRes, isLoading: isStatusLoading } = useShipmentStatusDistribution();
-  const { data: rankingRes, isLoading: isRankingLoading } = useBranchPerformanceRanking();
-  const { data: alertsRes, isLoading: isAlertsLoading } = useDashboardAlerts();
+  const handleAlertPageChange = (newPage: number) => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set("alertPage", String(newPage));
+        if (!next.get("alertLimit")) {
+          next.set("alertLimit", String(DEFAULT_ALERT_LIMIT));
+        }
+        return next;
+      },
+      { replace: true },
+    );
+  };
+
+  const { data: summaryRes, isLoading: isSummaryLoading } =
+    useDashboardSummary();
+  const { data: revenueRes, isLoading: isRevenueLoading } =
+    useDailyRevenueChart(revenueDays);
+  const { data: volumeRes, isLoading: isVolumeLoading } =
+    useVolumeByBranch(volumeBranchLimit);
+  const { data: statusRes, isLoading: isStatusLoading } =
+    useShipmentStatusDistribution();
+  const { data: rankingRes, isLoading: isRankingLoading } =
+    useBranchPerformanceRanking();
+  const {
+    data: alertsRes,
+    isLoading: isAlertsLoading,
+    isFetching: isAlertsFetching,
+  } = useDashboardAlerts({ page: alertPage, limit: alertLimit });
   const {
     data: shipmentsRes,
     isLoading: isShipmentsLoading,
     isFetching: isShipmentsFetching,
-  } = useRecentShipments({ limit: shipmentLimit, paymentStatus: paymentStatusFilter, page: shipmentPage });
+  } = useRecentShipments({
+    limit: shipmentLimit,
+    paymentStatus: paymentStatusFilter,
+    page: shipmentPage,
+  });
 
   const superAdminKpis = useMemo(() => {
     const s = summaryRes?.data;
     if (!s) return [];
     return [
-      { label: "Shipment Bulan Ini", value: numberFormatter.format(s.totalShipmentsThisMonth) },
-      { label: "Total Revenue", value: currencyFormatter.format(s.totalRevenue) },
-      { label: "Dalam Perjalanan", value: numberFormatter.format(s.inTransitPackages) },
+      {
+        label: "Shipment Bulan Ini",
+        value: numberFormatter.format(s.totalShipmentsThisMonth),
+      },
+      {
+        label: "Total Revenue",
+        value: currencyFormatter.format(s.totalRevenue),
+      },
+      {
+        label: "Dalam Perjalanan",
+        value: numberFormatter.format(s.inTransitPackages),
+      },
       { label: "Terkirim", value: numberFormatter.format(s.deliveredPackages) },
-      { label: "Cabang Aktif", value: numberFormatter.format(s.activeBranches) },
+      {
+        label: "Cabang Aktif",
+        value: numberFormatter.format(s.activeBranches),
+      },
       { label: "Kurir Aktif", value: numberFormatter.format(s.activeCouriers) },
     ];
   }, [summaryRes]);
 
   const dailyRevenue = useMemo(
     () =>
-      (revenueRes?.data.dailyRevenue ?? []).map((d) => ({
-        day: new Date(d.date).toLocaleDateString("id-ID", { weekday: "short" }),
-        revenue: d.revenue,
-      })),
-    [revenueRes]
+      (revenueRes?.data.dailyRevenue ?? []).map((d) => {
+        const date = new Date(d.date);
+        return {
+          day:
+            revenueDays <= 7
+              ? date.toLocaleDateString("id-ID", { weekday: "long" })
+              : date.toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "short",
+                }),
+          fullDate: date.toLocaleDateString("id-ID", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }),
+          revenue: d.revenue,
+        };
+      }),
+    [revenueRes, revenueDays],
   );
 
   const branchVolume = useMemo(
@@ -119,7 +185,7 @@ export const SuperAdminDashboardPage = () => {
         branch: v.branchName,
         volume: v.volume,
       })),
-    [volumeRes]
+    [volumeRes],
   );
 
   const statusDistribution = useMemo(
@@ -128,7 +194,7 @@ export const SuperAdminDashboardPage = () => {
         name: s.status,
         value: s.count,
       })),
-    [statusRes]
+    [statusRes],
   );
 
   const branchPerformance = useMemo(
@@ -138,7 +204,7 @@ export const SuperAdminDashboardPage = () => {
         processed: r.packagesProcessed,
         late: r.latePackages,
       })),
-    [rankingRes]
+    [rankingRes],
   );
 
   const latestShipments = useMemo(
@@ -149,43 +215,32 @@ export const SuperAdminDashboardPage = () => {
         status: sh.deliveryStatus,
         payment: sh.paymentStatus,
       })),
-    [shipmentsRes]
+    [shipmentsRes],
   );
 
-const alertMessages = useMemo(() => {
-    const a = alertsRes?.data;
-
-    if (!a) return [];
-
-    const expired = a.expiredPayments.items.map(
-      (p) => `Pembayaran ${p.trackingNumber} (invoice ${p.invoiceId}) sudah kedaluwarsa sejak ${new Date(p.expiryDate).toLocaleString("id-ID")}.`
-    );
-
-    const stuck = a.stuckPackages.items.map(
-      (p) => `Paket ${p.trackingNumber} tertahan di status "${p.deliveryStatus}" selama ${p.hoursStuck} jam.`);
-
-    const highQueue = a.highQueueBranches.map(
-      (b) => `Cabang ${b.branchName} memiliki ${numberFormatter.format(b.queuedPackages)} paket menumpuk dalam antrean.`
+  const alertMessages = useMemo(
+    () => (alertsRes?.data ?? []).map((alert) => alert.description),
+    [alertsRes],
   );
-
-  return [...expired, ...stuck, ...highQueue];
-}, [alertsRes]);
 
   return (
     <>
-      <div className={`grid ${SECTION_GAP} xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]`}>
+      <div
+        className={`grid ${SECTION_GAP} xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]`}
+      >
         <div className={`grid ${SECTION_GAP}`}>
           {isSummaryLoading ? (
             <Skeleton className="h-24 w-full rounded-2xl" />
           ) : (
             <KpiCards items={superAdminKpis} />
           )}
-
           <Card className={CARD_CLASS}>
             <CardHeader className="flex flex-row items-start justify-between pb-2">
               <div>
                 <CardTitle className="text-base">Revenue Harian</CardTitle>
-                <CardDescription>Estimasi pendapatan per hari di rentang terpilih</CardDescription>
+                <CardDescription>
+                  Estimasi pendapatan per hari di rentang terpilih
+                </CardDescription>
               </div>
               <div className="flex gap-1">
                 {[7, 14, 30].map((d) => (
@@ -205,77 +260,171 @@ const alertMessages = useMemo(() => {
               {isRevenueLoading ? (
                 <Skeleton className="h-[220px] w-full rounded-xl" />
               ) : (
-                <ChartContainer config={CHART_CONFIG} className="h-[220px] w-full">
-                  <LineChart data={dailyRevenue} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                    <XAxis dataKey="day" stroke="var(--muted-foreground)" tickLine={false} axisLine={false} fontSize={12} />
-                    <YAxis stroke="var(--muted-foreground)" tickLine={false} axisLine={false} fontSize={12} />
-                    <Tooltip />
-                    <Line type="monotone" dataKey="revenue" stroke="var(--color-revenue)" strokeWidth={2.5} dot={{ r: 3 }} />
+                <ChartContainer
+                  config={CHART_CONFIG}
+                  className="h-[240px] w-full"
+                >
+                  <LineChart
+                    data={dailyRevenue}
+                    margin={{
+                      top: 10,
+                      right: 10,
+                      left: 4,
+                      bottom: revenueDays <= 7 ? 20 : 0,
+                    }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      vertical={false}
+                    />
+                    <XAxis
+                      dataKey="day"
+                      stroke="var(--muted-foreground)"
+                      tickLine={false}
+                      axisLine={false}
+                      fontSize={11}
+                      angle={revenueDays <= 7 ? -35 : 0}
+                      textAnchor={revenueDays <= 7 ? "end" : "middle"}
+                      height={revenueDays <= 7 ? 45 : 30}
+                      interval={revenueDays > 14 ? "preserveStartEnd" : 0}
+                    />
+                    <YAxis
+                      stroke="var(--muted-foreground)"
+                      tickLine={false}
+                      axisLine={false}
+                      fontSize={11}
+                      width={56}
+                      tickFormatter={(value: number) =>
+                        new Intl.NumberFormat("id-ID", {
+                          notation: "compact",
+                          compactDisplay: "short",
+                        }).format(value)
+                      }
+                    />
+                    <Tooltip
+                      labelFormatter={(_, payload) =>
+                        payload?.[0]?.payload?.fullDate ?? ""
+                      }
+                      formatter={(value: number) => [
+                        currencyFormatter.format(value),
+                        "Revenue",
+                      ]}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="revenue"
+                      stroke="var(--color-revenue)"
+                      strokeWidth={2.5}
+                      dot={{ r: 3 }}
+                    />
                   </LineChart>
                 </ChartContainer>
               )}
             </CardContent>
           </Card>
-
           <Card className={CARD_CLASS}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Ranking Performa Cabang</CardTitle>
-              <CardDescription>Cabang dengan pemrosesan tercepat dan tingkat keterlambatan.</CardDescription>
+              <CardTitle className="text-base">
+                Ranking Performa Cabang
+              </CardTitle>
+              <CardDescription>
+                Cabang dengan pemrosesan tercepat dan tingkat keterlambatan
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               {isRankingLoading ? (
-                Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-9 w-full rounded-xl" />)
+                Array.from({ length: 4 }).map((_, i) => (
+                  <Skeleton key={i} className="h-9 w-full rounded-xl" />
+                ))
               ) : branchPerformance.length === 0 ? (
-                <p className="text-xs text-muted-foreground">Belum ada data performa cabang.</p>
+                <p className="text-xs text-muted-foreground">
+                  Belum ada data performa cabang
+                </p>
               ) : (
                 branchPerformance.map((item) => (
                   <div
                     key={item.branch}
                     className="grid grid-cols-3 items-center gap-3 rounded-xl bg-muted/30 px-4 py-2.5 text-xs"
                   >
-                    <div className="font-medium text-foreground">{item.branch}</div>
-                    <div className="text-muted-foreground">{numberFormatter.format(item.processed)} diproses</div>
-                    <div className="text-muted-foreground">{numberFormatter.format(item.late)} terlambat</div>
+                    <div className="font-medium text-foreground">
+                      {item.branch}
+                    </div>
+                    <div className="text-muted-foreground">
+                      {numberFormatter.format(item.processed)} diproses
+                    </div>
+                    <div className="text-muted-foreground">
+                      {numberFormatter.format(item.late)} terlambat
+                    </div>
                   </div>
                 ))
               )}
             </CardContent>
           </Card>
         </div>
-
         <div className={`grid ${SECTION_GAP}`}>
           <Card className={CARD_CLASS}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Volume Shipment per Cabang</CardTitle>
+              <CardTitle className="text-base">
+                Volume Shipment per Cabang
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {isVolumeLoading ? (
                 <Skeleton className="h-[200px] w-full rounded-xl" />
               ) : (
-                <ChartContainer config={CHART_CONFIG} className="h-[200px] w-full">
-                  <BarChart data={branchVolume} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-                    <XAxis dataKey="branch" stroke="var(--muted-foreground)" tickLine={false} axisLine={false} fontSize={12} />
-                    <YAxis stroke="var(--muted-foreground)" tickLine={false} axisLine={false} fontSize={12} />
+                <ChartContainer
+                  config={CHART_CONFIG}
+                  className="h-[200px] w-full"
+                >
+                  <BarChart
+                    data={branchVolume}
+                    margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+                  >
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="var(--border)"
+                      vertical={false}
+                    />
+                    <XAxis
+                      dataKey="branch"
+                      stroke="var(--muted-foreground)"
+                      tickLine={false}
+                      axisLine={false}
+                      fontSize={12}
+                    />
+                    <YAxis
+                      stroke="var(--muted-foreground)"
+                      tickLine={false}
+                      axisLine={false}
+                      fontSize={12}
+                    />
                     <Tooltip />
-                    <Bar dataKey="volume" fill="var(--color-volume)" radius={[6, 6, 0, 0]} />
+                    <Bar
+                      dataKey="volume"
+                      fill="var(--color-volume)"
+                      radius={[6, 6, 0, 0]}
+                    />
                   </BarChart>
                 </ChartContainer>
               )}
             </CardContent>
           </Card>
-
           <Card className={CARD_CLASS}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-base">Distribusi Status Pengiriman</CardTitle>
+              <CardTitle className="text-base">
+                Distribusi Status Pengiriman
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {isStatusLoading ? (
                 <Skeleton className="h-[200px] w-full rounded-xl" />
               ) : (
                 <>
-                  <ChartContainer config={CHART_CONFIG} className="h-[200px] w-full">
+                  <ChartContainer
+                    config={CHART_CONFIG}
+                    className="h-[200px] w-full"
+                  >
                     <PieChart>
                       <Pie
                         data={statusDistribution}
@@ -287,7 +436,10 @@ const alertMessages = useMemo(() => {
                         strokeWidth={0}
                       >
                         {statusDistribution.map((entry, index) => (
-                          <Cell key={entry.name} fill={STATUS_COLORS[index % STATUS_COLORS.length]} />
+                          <Cell
+                            key={entry.name}
+                            fill={STATUS_COLORS[index % STATUS_COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip />
@@ -295,10 +447,16 @@ const alertMessages = useMemo(() => {
                   </ChartContainer>
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
                     {statusDistribution.map((entry, index) => (
-                      <div key={entry.name} className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <div
+                        key={entry.name}
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                      >
                         <span
                           className="h-2 w-2 rounded-full"
-                          style={{ backgroundColor: STATUS_COLORS[index % STATUS_COLORS.length] }}
+                          style={{
+                            backgroundColor:
+                              STATUS_COLORS[index % STATUS_COLORS.length],
+                          }}
                         />
                         {entry.name}
                       </div>
@@ -308,88 +466,96 @@ const alertMessages = useMemo(() => {
               )}
             </CardContent>
           </Card>
-
           {isAlertsLoading ? (
             <Skeleton className="h-40 w-full rounded-2xl" />
           ) : (
-            <AlertCard alerts={alertMessages} />
+            <div
+              className={
+                isAlertsFetching ? "opacity-60 transition-opacity" : ""
+              }
+            >
+              <AlertCard
+                alerts={alertMessages}
+                footer={
+                  alertsRes?.paging && alertsRes.paging.totalPages > 1 ? (
+                    <div className="pt-2">
+                      <PaginationControl
+                        paging={alertsRes.paging}
+                        onPageChange={handleAlertPageChange}
+                      />
+                    </div>
+                  ) : null
+                }
+              />
+            </div>
           )}
         </div>
       </div>
-
-      <div className={`grid ${SECTION_GAP} lg:grid-cols-2`}>
-        <Card className={CARD_CLASS}>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Shipment Terbaru</CardTitle>
-            <CardDescription>Tabel ringkas status terbaru dan status pembayaran.</CardDescription>
-          </CardHeader>
-          <CardContent className="overflow-x-auto">
-            {isShipmentsLoading ? (
-              <div className="space-y-2">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Skeleton key={i} className="h-9 w-full rounded-lg" />
-                ))}
-              </div>
-            ) : (
-              <>
-                <table className="w-full min-w-[24rem] border-separate border-spacing-y-1 text-left text-xs">
-                  <thead>
-                    <tr className="text-muted-foreground">
-                      <th className="px-4 py-2 font-medium">Tracking</th>
-                      <th className="px-4 py-2 font-medium">Cabang</th>
-                      <th className="px-4 py-2 font-medium">Status</th>
-                      <th className="px-4 py-2 font-medium">Pembayaran</th>
+      <Card className={CARD_CLASS}>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">Shipment Terbaru</CardTitle>
+          <CardDescription>
+            Tabel ringkas status terbaru dan status pembayaran
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="overflow-x-auto">
+          {isShipmentsLoading ? (
+            <div className="space-y-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-9 w-full rounded-lg" />
+              ))}
+            </div>
+          ) : (
+            <>
+              <table className="w-full min-w-[24rem] border-separate border-spacing-y-1 text-left text-xs">
+                <thead>
+                  <tr className="text-muted-foreground">
+                    <th className="px-4 py-2 font-medium">Tracking</th>
+                    <th className="px-4 py-2 font-medium">Cabang</th>
+                    <th className="px-4 py-2 font-medium">Status</th>
+                    <th className="px-4 py-2 font-medium">Pembayaran</th>
+                  </tr>
+                </thead>
+                <tbody
+                  className={
+                    isShipmentsFetching ? "opacity-60 transition-opacity" : ""
+                  }
+                >
+                  {latestShipments.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={4}
+                        className="px-4 py-3 text-center text-muted-foreground"
+                      >
+                        Tidak ada shipment
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className={isShipmentsFetching ? "opacity-60 transition-opacity" : ""}>
-                    {latestShipments.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="px-4 py-3 text-center text-muted-foreground">
-                          Tidak ada shipment.
+                  ) : (
+                    latestShipments.map((shipment) => (
+                      <tr key={shipment.tracking} className="bg-muted/30">
+                        <td className="rounded-l-lg px-4 py-2.5">
+                          {shipment.tracking}
+                        </td>
+                        <td className="px-4 py-2.5">{shipment.branch}</td>
+                        <td className="px-4 py-2.5">{shipment.status}</td>
+                        <td className="rounded-r-lg px-4 py-2.5">
+                          {shipment.payment}
                         </td>
                       </tr>
-                    ) : (
-                      latestShipments.map((shipment) => (
-                        <tr key={shipment.tracking} className="bg-muted/30">
-                          <td className="rounded-l-lg px-4 py-2.5">{shipment.tracking}</td>
-                          <td className="px-4 py-2.5">{shipment.branch}</td>
-                          <td className="px-4 py-2.5">{shipment.status}</td>
-                          <td className="rounded-r-lg px-4 py-2.5">{shipment.payment}</td>
-                        </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
-
-                {shipmentsRes?.paging && shipmentsRes.paging.totalPages > 1 && (
-                  <PaginationControl
-                    paging={shipmentsRes.paging}
-                    onPageChange={handleShipmentPageChange}
-                  />
-                )}
-              </>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className={CARD_CLASS}>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-base">Aksi Cepat</CardTitle>
-            <CardDescription>Kelola cabang, employee, dan permission dari satu tempat.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-2">
-            <Button variant="darkGreen" size="sm" className="w-full justify-between">
-              Kelola Cabang <ArrowUp size={16} />
-            </Button>
-            <Button variant="darkGreen" size="sm" className="w-full justify-between">
-              Kelola Employee <ArrowDown size={16} />
-            </Button>
-            <Button variant="darkGreen" size="sm" className="w-full justify-between">
-              Kelola Permission <RefreshCircle size={16} />
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+                    ))
+                  )}
+                </tbody>
+              </table>
+              {shipmentsRes?.paging && shipmentsRes.paging.totalPages > 1 && (
+                <PaginationControl
+                  paging={shipmentsRes.paging}
+                  onPageChange={handleShipmentPageChange}
+                />
+              )}
+            </>
+          )}
+        </CardContent>
+      </Card>
     </>
   );
 };

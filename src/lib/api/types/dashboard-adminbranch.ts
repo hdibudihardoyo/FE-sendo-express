@@ -21,7 +21,7 @@ export interface RecentScanLogs {
     scanTime: string;
     scannedBy: {
         id: number;
-        name: string;
+        fullName: string;
         email: string;
     }
 }
@@ -62,4 +62,5 @@ export interface StuckPackagesAlert {
 export interface StuckPackagesAlertResponse {
     meta: ApiMeta;
     data: StuckPackagesAlert[];
+    paging: Pagination
 }

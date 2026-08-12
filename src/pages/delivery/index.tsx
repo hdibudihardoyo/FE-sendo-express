@@ -11,7 +11,7 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchParams } from "react-router";
 
-const LIMIT = 5;
+const LIMIT = 10;
 
 export default function DeliveryPage() {
   useMeta(META_DATA.delivery);

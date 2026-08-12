@@ -74,6 +74,11 @@ export interface Timeline {
     createdAt: string;
 }
 
+export interface PackageTimeline {
+    data: Timeline[];
+    paging: Pagination;
+}
+
 export interface CourierOnGoingPackages {
     id: number;
     trackingNumber: string;
@@ -85,10 +90,11 @@ export interface CourierOnGoingPackages {
     packageType: string;
     weight: number;
     lastHandledAt: string;
-    timeline: Timeline[];
+    timeline: PackageTimeline;
 }
 
 export interface CourierOnGoingPackagesResponse {
     meta: ApiMeta;
     data: CourierOnGoingPackages[];
+    paging: Pagination;
 }

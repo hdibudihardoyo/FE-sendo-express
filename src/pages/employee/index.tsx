@@ -19,7 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import type { EmployeeBranchFilters } from "@/lib/api/types/employee";
 import { Loader2 } from "lucide-react";
 
-const DEFAULT_LIMIT = 5;
+const DEFAULT_LIMIT = 10;
 
 type FilterField = "name" | "email" | "phoneNumber" | "branchName";
 

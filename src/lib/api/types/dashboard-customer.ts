@@ -22,6 +22,7 @@ export interface ActiveShipments {
 export interface ActiveShipmentsResponse {
     meta: ApiMeta
     data: ActiveShipments[]
+    paging: Pagination
 }
 
 export interface ShipmentHistory {
