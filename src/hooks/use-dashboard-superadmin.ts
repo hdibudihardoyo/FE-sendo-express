@@ -45,6 +45,8 @@ const ALERTS_PAGE_MIN = 1;
 const ALERTS_LIMIT_MIN = 1;
 const ALERTS_LIMIT_MAX = 100;
 
+const REFRESH_INTERVAL = 30 * 1000;
+
 function clampInt(value: number, min: number, max?: number): number {
   const intValue = Number.isFinite(value) ? Math.trunc(value) : min;
   const withMin = Math.max(min, intValue);
@@ -123,7 +125,8 @@ export function useDashboardSummary() {
   return useQuery<DashboardSummaryResponse, Error>({
     queryKey: superAdminDashboardKeys.summary(),
     queryFn: () => SuperAdminDashboard.getDashboardSummary(),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -133,8 +136,9 @@ export function useDailyRevenueChart(days: number) {
   return useQuery<DailyRevenueChartResponse, Error>({
     queryKey: superAdminDashboardKeys.revenue(normalizedDays),
     queryFn: () => SuperAdminDashboard.getDailyRevenueChart(normalizedDays),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
     placeholderData: keepPreviousData,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -144,8 +148,9 @@ export function useVolumeByBranch(limit: number) {
   return useQuery<VolumeBranchResponse, Error>({
     queryKey: superAdminDashboardKeys.volumeByBranch(normalizedLimit),
     queryFn: () => SuperAdminDashboard.getVolumeByBranch(normalizedLimit),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
     placeholderData: keepPreviousData,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -153,7 +158,8 @@ export function useShipmentStatusDistribution() {
   return useQuery<ShipmentStatusDistributionResponse, Error>({
     queryKey: superAdminDashboardKeys.statusDistribution(),
     queryFn: () => SuperAdminDashboard.getShipmentStatusDistribution(),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -161,7 +167,8 @@ export function useBranchPerformanceRanking() {
   return useQuery<BranchPerformanceRankingResponse, Error>({
     queryKey: superAdminDashboardKeys.branchRanking(),
     queryFn: () => SuperAdminDashboard.getBranchPerformanceRanking(),
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -172,7 +179,8 @@ export function useRecentShipments(params: RecentShipmentsParams) {
     queryKey: superAdminDashboardKeys.recentShipments(normalizedParams),
     queryFn: () => SuperAdminDashboard.getRecentShipments(normalizedParams),
     placeholderData: keepPreviousData,
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -184,6 +192,6 @@ export function useDashboardAlerts(params: DashboardAlertsParams) {
     queryFn: () => SuperAdminDashboard.getDashboardAlerts(normalizedParams),
     placeholderData: keepPreviousData,
     staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }

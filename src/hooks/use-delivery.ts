@@ -33,7 +33,8 @@ export const useCourierShipment = (trackingNumber: string, enabled = true) => {
     queryKey: courierShipmentKeys.detail(trackingNumber),
     queryFn: () => courierShipmentService.getOneCourierShipment(trackingNumber),
     enabled: !!trackingNumber && enabled,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: 30 * 1000,
   });
 };
 

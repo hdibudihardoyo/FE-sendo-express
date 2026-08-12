@@ -33,7 +33,6 @@ import {
   Truck,
 } from "iconsax-reactjs";
 import { Link, useLocation } from "react-router";
-import { ProCard } from "./pro-card";
 import { ChevronDown } from "lucide-react";
 import { usePermission } from "../hooks/use-permission";
 import { PermissionGuard } from "./permission-guard";
@@ -280,7 +279,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </Collapsible>
           );
         })}
-        <ProCard />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

@@ -11,10 +11,13 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { PaginationControl } from "@/components/ui/pagination-control";
 import { Location } from "iconsax-reactjs";
+import { Eye } from "lucide-react";
 import { getStatusLabel } from "@/lib/utils/status-utils";
 import type { DeliveryStatus } from "@/lib/api/types/shipment";
+import type { CourierTaskList } from "@/lib/api/types/dashboard-courier";
 import type { TaskAction } from "../types";
 import { TaskActionDialog } from "../components/task-action-dialog";
+import Detail from "../../delivery/detail";
 import {
   useCourierDashboardSummary,
   useCourierTaskList,
@@ -34,9 +37,46 @@ const STATUS_BADGE_CLASS: Record<string, string> = {
 
 const todayIso = () => new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 
+type TaskActionConfig = {
+  label: string;
+  variant: "darkGreen" | "oranye" | "secondary" | "default";
+  type: "pickup" | "deliver";
+};
+
+function getTaskAction(task: CourierTaskList): TaskActionConfig | null {
+  switch (task.deliveryStatus) {
+    case "READY_TO_PICKUP":
+      return { label: "Pickup", variant: "darkGreen", type: "pickup" };
+    case "WAITING_FOR_PICKUP":
+      return {
+        label: "Konfirmasi Paket Dijemput",
+        variant: "darkGreen",
+        type: "pickup",
+      };
+    case "PICKED_UP":
+      return { label: "Kirim ke Cabang", variant: "oranye", type: "deliver" };
+    case "READY_TO_PICKUP_AT_BRANCH":
+      return {
+        label: "Ambil dari Cabang",
+        variant: "secondary",
+        type: "pickup",
+      };
+    case "READY_TO_DELIVER":
+      return { label: "Siap di Kirim", variant: "default", type: "deliver" };
+    case "ON_THE_WAY_TO_ADDRESS":
+      return {
+        label: "Konfirmasi Paket Diserahkan",
+        variant: "darkGreen",
+        type: "deliver",
+      };
+    default:
+      return null;
+  }
+}
+
 export const CourierDashboardPage = () => {
   const [activeTaskAction, setActiveTaskAction] = useState<TaskAction>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [activeDetail, setActiveDetail] = useState<string | null>(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const taskListPage = Number(searchParams.get("taskListPage") || 1);
@@ -122,14 +162,8 @@ export const CourierDashboardPage = () => {
   const onGoingPackages = onGoingRes?.data ?? [];
   const route = routeMapRes?.data?.[0];
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) setPhotoPreview(URL.createObjectURL(file));
-  };
-
   const closeTaskDialog = () => {
     setActiveTaskAction(null);
-    setPhotoPreview(null);
   };
 
   return (
@@ -164,59 +198,61 @@ export const CourierDashboardPage = () => {
                     : "space-y-2"
                 }
               >
-                {courierTasks.map((task) => (
-                  <div
-                    key={task.id}
-                    className="rounded-xl bg-muted/30 p-3 sm:p-4"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="truncate text-sm font-medium sm:text-base">
-                        {task.trackingNumber}
-                      </span>
-                      <span
-                        className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ${
-                          STATUS_BADGE_CLASS[task.taskType] ??
-                          "bg-background text-muted-foreground"
-                        }`}
-                      >
-                        {getStatusLabel(task.deliveryStatus as DeliveryStatus)}
-                      </span>
+                {courierTasks.map((task) => {
+                  const action = getTaskAction(task);
+                  return (
+                    <div
+                      key={task.id}
+                      className="rounded-xl bg-muted/30 p-3 sm:p-4"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="truncate text-sm font-medium sm:text-base">
+                          {task.trackingNumber}
+                        </span>
+                        <span
+                          className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ${
+                            STATUS_BADGE_CLASS[task.taskType] ??
+                            "bg-background text-muted-foreground"
+                          }`}
+                        >
+                          {getStatusLabel(
+                            task.deliveryStatus as DeliveryStatus,
+                          )}
+                        </span>
+                      </div>
+                      <div className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
+                        {task.taskType === "pickup"
+                          ? task.pickupAddress
+                          : task.destinationAddress}
+                      </div>
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setActiveDetail(task.trackingNumber)}
+                        >
+                          <Eye className="mr-1 h-4 w-4" />
+                          Detail
+                        </Button>
+                        {action && (
+                          <Button
+                            variant={action.variant}
+                            size="sm"
+                            onClick={() =>
+                              setActiveTaskAction({
+                                title: task.trackingNumber,
+                                type: action.type,
+                                deliveryStatus: task.deliveryStatus,
+                              })
+                            }
+                          >
+                            {action.label}
+                          </Button>
+                        )}
+                      </div>
                     </div>
-                    <div className="mt-1 truncate text-xs text-muted-foreground sm:text-sm">
-                      {task.taskType === "pickup"
-                        ? task.pickupAddress
-                        : task.destinationAddress}
-                    </div>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <Button
-                        variant="darkGreen"
-                        size="sm"
-                        className="flex-1 sm:flex-none"
-                        onClick={() =>
-                          setActiveTaskAction({
-                            title: task.trackingNumber,
-                            type: "pickup",
-                          })
-                        }
-                      >
-                        Pickup
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 sm:flex-none"
-                        onClick={() =>
-                          setActiveTaskAction({
-                            title: task.trackingNumber,
-                            type: "deliver",
-                          })
-                        }
-                      >
-                        Deliver
-                      </Button>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
             {taskListRes?.paging && taskListRes.paging.totalPages > 1 && (
@@ -401,10 +437,13 @@ export const CourierDashboardPage = () => {
 
       <TaskActionDialog
         activeTaskAction={activeTaskAction}
-        photoPreview={photoPreview}
-        onPhotoChange={handlePhotoChange}
         onClose={closeTaskDialog}
-        onConfirm={closeTaskDialog}
+        onActionComplete={closeTaskDialog}
+      />
+      <Detail
+        trackingNumber={activeDetail}
+        isOpen={!!activeDetail}
+        onClose={() => setActiveDetail(null)}
       />
     </div>
   );

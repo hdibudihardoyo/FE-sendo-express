@@ -26,6 +26,8 @@ const SCAN_PAGE_MIN = 1;
 const SCAN_LIMIT_MIN = 1;
 const SCAN_LIMIT_MAX = 100;
 
+const REFRESH_INTERVAL = 30 * 1000;
+
 const DAYS_MIN = 1;
 const DAYS_MAX = 30;
 const DAYS_DEFAULT = 7;
@@ -110,7 +112,8 @@ export function useAdminBranchDashboardSummary() {
   return useQuery<AdminBranchDashboardSummaryResponse, Error>({
     queryKey: adminBranchDashboardKeys.summary(),
     queryFn: () => AdminBranchDashboard.getAdminBranchDashboardSummary(),
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -122,6 +125,7 @@ export function useRecentScanLogs(params: RecentScanLogsParams = {}) {
     queryFn: () => AdminBranchDashboard.getRecentScanLogs(normalizedParams),
     placeholderData: keepPreviousData,
     staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -132,6 +136,8 @@ export function useActivityTrend(days: number) {
     queryKey: adminBranchDashboardKeys.activityTrend(normalizedDays),
     queryFn: () => AdminBranchDashboard.getActivityTrend(normalizedDays),
     placeholderData: keepPreviousData,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -143,6 +149,6 @@ export function useStuckPackagesAlert(params: StuckPackagesAlertParams = {}) {
     queryFn: () => AdminBranchDashboard.getStuckPackagesAlert(normalizedParams),
     placeholderData: keepPreviousData,
     staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }

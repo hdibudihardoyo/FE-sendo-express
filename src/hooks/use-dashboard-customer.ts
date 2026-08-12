@@ -12,6 +12,8 @@ const PAGE_MIN = 1;
 const LIMIT_MIN = 1;
 const LIMIT_MAX = 100;
 
+const REFRESH_INTERVAL = 30 * 1000;
+
 function clampInt(value: number, min: number, max?: number): number {
   const intValue = Number.isFinite(value) ? Math.trunc(value) : min;
   const withMin = Math.max(min, intValue);
@@ -51,7 +53,7 @@ export function useActiveShipments(params: paramsCustomer) {
     queryFn: () => customerDashboard.getActiveShipments(normalizedParams),
     placeholderData: keepPreviousData,
     staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -62,6 +64,7 @@ export function useShipmentHistory(params: paramsCustomer) {
     queryKey: customerDashboardKeys.shipmentHistory(normalizedParams),
     queryFn: () => customerDashboard.getShipmentHistory(normalizedParams),
     placeholderData: keepPreviousData,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }

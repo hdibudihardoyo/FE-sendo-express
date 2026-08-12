@@ -12,6 +12,8 @@ import type {
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
+const REFRESH_INTERVAL = 15 * 1000;
+
 const PAGE_MIN = 1;
 const LIMIT_MIN = 1;
 const LIMIT_MAX = 100;
@@ -68,7 +70,8 @@ export function useCourierDashboardSummary(params: paramsCourier) {
     queryKey: courierDashboardKeys.summary(normalizedParams),
     queryFn: () =>
       courierDashboard.getDashboardCourierSummary(normalizedParams),
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -79,7 +82,8 @@ export function useCourierTaskList(params: paramsCourier) {
     queryKey: courierDashboardKeys.taskList(normalizedParams),
     queryFn: () => courierDashboard.getCourierTaskList(normalizedParams),
     placeholderData: keepPreviousData,
-    staleTime: 60 * 1000,
+    staleTime: 30 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -87,8 +91,8 @@ export function useCourierRouteMap() {
   return useQuery<CourierRouteMapResponse, Error>({
     queryKey: courierDashboardKeys.routeMap(),
     queryFn: () => courierDashboard.getCourierRouteMap(),
-    staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
+    staleTime: 15 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }
 
@@ -98,7 +102,7 @@ export function useCourierOnGoingPackages(params: paramsCourier) {
   return useQuery<CourierOnGoingPackagesResponse, Error>({
     queryKey: courierDashboardKeys.onGoingPackages(normalizedParams),
     queryFn: () => courierDashboard.getCourierOnGoingPackages(normalizedParams),
-    staleTime: 30 * 1000,
-    refetchInterval: 60 * 1000,
+    staleTime: 15 * 1000,
+    refetchInterval: REFRESH_INTERVAL,
   });
 }

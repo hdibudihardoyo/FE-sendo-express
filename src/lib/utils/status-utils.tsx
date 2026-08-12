@@ -151,7 +151,7 @@ export const formatPaymentStatus = (status: PaymentStatus): string => {
     case "PENDING":
       return "Belum Bayar";
     case "PAID":
-      return "Sudah Bayar";
+      return "Lunas";
     case "SETTLED":
       return "Lunas";
     case "EXPIRED":

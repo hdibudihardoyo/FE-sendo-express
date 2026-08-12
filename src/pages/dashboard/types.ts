@@ -1,4 +1,8 @@
-export type TaskAction = { title: string; type: "pickup" | "deliver" } | null;
+export type TaskAction = {
+  title: string;
+  type: "pickup" | "deliver";
+  deliveryStatus: string;
+} | null;
 
 export type KpiItem = {
   label: string;
