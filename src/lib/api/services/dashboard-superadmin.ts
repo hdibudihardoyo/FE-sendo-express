@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   SuperAdminDashboardSummaryResponse,
   DailyRevenueChartResponse,
@@ -19,7 +18,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -33,7 +32,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -47,7 +46,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -58,7 +57,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -69,7 +68,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -91,7 +90,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -111,7 +110,7 @@ export const SuperAdminDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },

@@ -1,6 +1,5 @@
 import { apiClient } from "./../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   UserAddress,
   CreateUserAddressRequest,
@@ -23,7 +22,7 @@ export const userAddressService = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -35,7 +34,7 @@ export const userAddressService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -50,7 +49,7 @@ export const userAddressService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -66,7 +65,7 @@ export const userAddressService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -77,7 +76,7 @@ export const userAddressService = {
         `/api/user-addresses/${userAddressId}`,
       );
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },

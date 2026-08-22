@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   ApiResponse,
   LoginRequest,
@@ -64,7 +63,7 @@ export const authService = {
 
       return { accessToken, user };
     } catch (error) {
-      throw new Error(handleAxiosError(error as AxiosErrorType));
+      throw new Error(handleAxiosError(error));
     }
   },
 
@@ -92,7 +91,7 @@ export const authService = {
 
       return { user: response.data.data };
     } catch (error) {
-      throw new Error(handleAxiosError(error as AxiosErrorType));
+      throw new Error(handleAxiosError(error));
     }
   },
 
@@ -107,7 +106,7 @@ export const authService = {
 
       return updatedUser;
     } catch (error) {
-      throw new Error(handleAxiosError(error as AxiosErrorType));
+      throw new Error(handleAxiosError(error));
     }
   },
 
@@ -120,7 +119,7 @@ export const authService = {
 
       return response.data.data;
     } catch (error) {
-      throw new Error(handleAxiosError(error as AxiosErrorType));
+      throw new Error(handleAxiosError(error));
     }
   },
 };

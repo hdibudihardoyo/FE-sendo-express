@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   HistoryParams,
   HistoryResponse,
@@ -18,7 +17,7 @@ export const getAllHistory = async (
     );
     return data;
   } catch (error) {
-    throw handleAxiosError(error as AxiosErrorType);
+    throw new Error(handleAxiosError(error));
   }
 };
 
@@ -32,6 +31,6 @@ export const getHistoryById = async (
     );
     return data;
   } catch (error) {
-    throw handleAxiosError(error as AxiosErrorType);
+    throw new Error(handleAxiosError(error));
   }
 };

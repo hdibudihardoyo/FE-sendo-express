@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   Role,
   UpdateRoleRequest,
@@ -17,7 +16,7 @@ export const roleService = {
       });
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -29,7 +28,7 @@ export const roleService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -45,7 +44,7 @@ export const roleService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },

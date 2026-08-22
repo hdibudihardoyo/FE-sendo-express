@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   AdminBranchDashboardSummaryResponse,
   RecentScanLogsResponse,
@@ -16,7 +15,7 @@ export const AdminBranchDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -37,7 +36,7 @@ export const AdminBranchDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -52,7 +51,7 @@ export const AdminBranchDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -75,7 +74,7 @@ export const AdminBranchDashboard = {
       );
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },

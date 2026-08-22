@@ -20,5 +20,9 @@ export interface AxiosErrorType {
 
 // type guard untuk memastikan error adalah axios error
 export const isAxiosError = (error: unknown): error is AxiosErrorType => {
-  return Boolean(error && typeof error === "object" && "response" in error);
+  return Boolean(
+    error &&
+      typeof error === "object" &&
+      ("isAxiosError" in error || "response" in error || "code" in error),
+  );
 };

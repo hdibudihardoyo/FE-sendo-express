@@ -1,4 +1,5 @@
-import type { AxiosErrorType, ApiError } from "./api-error-types";
+import type { ApiError } from "./api-error-types";
+import { isAxiosError } from "./api-error-types";
 
 export const handleApiError = (errorData: ApiError): string => {
   // Handle Validation Errors
@@ -14,17 +15,15 @@ export const handleApiError = (errorData: ApiError): string => {
   return errorData.message || "Terjadi kesalahan. Silahkan coba lagi.";
 };
 
-export const parseApiError = async (response: Response): Promise<string> => {
-  try {
-    const errorData: ApiError = await response.json();
-    return handleApiError(errorData);
-  } catch {
-    return "Terjadi kesalahan. Silahkan coba lagi.";
-  }
-};
-
 // for axios errors handling
-export const handleAxiosError = (error: AxiosErrorType): string => {
+export const handleAxiosError = (error: unknown): string => {
+  // non-axios errors (Error instance or unknown throw)
+  if (!isAxiosError(error)) {
+    return error instanceof Error
+      ? error.message
+      : "Terjadi kesalahan. Silahkan coba lagi.";
+  }
+
   // handle errors response
   if (error.response?.data) {
     const errorData: ApiError = error.response.data;

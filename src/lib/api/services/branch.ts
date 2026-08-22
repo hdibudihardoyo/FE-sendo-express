@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
   Branch,
   BranchParams,
@@ -17,7 +16,7 @@ export const branchService = {
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -30,7 +29,7 @@ export const branchService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -44,7 +43,7 @@ export const branchService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -58,7 +57,7 @@ export const branchService = {
       );
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
@@ -68,7 +67,7 @@ export const branchService = {
     try {
       await apiClient.delete(`/api/branches/${branchId}`);
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
 
       throw new Error(errorMessage);
     }

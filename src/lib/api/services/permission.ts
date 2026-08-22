@@ -1,6 +1,5 @@
 import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
-import type { AxiosErrorType } from "../../utils/api-error-types";
 import type { Permission, PermissionResponse } from "../types/permission";
 
 export const permissionService = {
@@ -10,7 +9,7 @@ export const permissionService = {
         await apiClient.get<PermissionResponse>("/api/permissions");
       return response.data.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error as AxiosErrorType);
+      const errorMessage = handleAxiosError(error);
       throw new Error(errorMessage);
     }
   },
