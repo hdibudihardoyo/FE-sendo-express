@@ -1,4 +1,5 @@
 import axios from "axios";
+import axiosRetry from "axios-retry";
 import { API_CONFIG } from "./config";
 
 // create axios instance
@@ -8,6 +9,13 @@ export const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+// auto-retry failed requests (network errors, timeouts, 5xx)
+axiosRetry(apiClient, {
+  retries: API_CONFIG.retries,
+  retryDelay: axiosRetry.exponentialDelay,
+  shouldResetTimeout: true,
 });
 
 // request interceptor to add auth token

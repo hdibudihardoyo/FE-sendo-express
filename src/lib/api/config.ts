@@ -10,17 +10,3 @@ export const API_CONFIG = {
   timeout: 10000,
   retries: 3,
 } as const;
-
-export const MOCK_CONFIG = {
-  enabled: false,
-  delay: {
-    min: 300,
-    max: 1000,
-  },
-} as const;
-
-export const getApiConfig = () => ({
-  ...API_CONFIG,
-  environment: isDevelopment ? "development" : "production",
-  mockMode: isDevelopment && MOCK_CONFIG.enabled,
-});
