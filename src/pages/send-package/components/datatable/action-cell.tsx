@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, buttonVariants } from "@/components/ui/button";
-import type { Shipment } from "@/lib/api/types/shipment";
+import type { Shipment } from "@/lib/api";
 
 interface ActionCellProps {
   shipment: Shipment;

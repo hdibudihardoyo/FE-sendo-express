@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { PermissionGuard } from "@/components/permission-guard";
-import type { EmployeeBranch } from "@/lib/api/types/employee";
+import type { EmployeeBranch } from "@/lib/api";
 import { useDeleteEmployee } from "@/hooks/use-employee";
 
 interface ActionCellProps {

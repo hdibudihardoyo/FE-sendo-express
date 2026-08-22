@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import type { UserAddress } from "@/lib/api/types/user-address";
+import type { UserAddress } from "@/lib/api";
 import { useDeleteUserAddress } from "@/hooks/use-user-address";
 
 interface ActionCellProps {

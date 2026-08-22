@@ -1,7 +1,7 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { type ColumnDef } from "@tanstack/react-table";
-import type { CourierShipmentListItem } from "@/lib/api/types/delivery";
+import type { CourierShipmentListItem } from "@/lib/api";
 import {
   getStatusBadgeVariant,
   getStatusLabel,

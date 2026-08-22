@@ -21,7 +21,7 @@ import {
   useStuckPackagesAlert,
 } from "@/hooks/use-dashboard-adminbranch";
 import { getStatusLabel } from "@/lib/utils/status-utils";
-import type { DeliveryStatus } from "@/lib/api/types/shipment";
+import type { DeliveryStatus } from "@/lib/api";
 const CARD_CLASS = "rounded-2xl border border-border/60 shadow-sm";
 const CHART_CONFIG = {
   in: { label: "Masuk", color: "var(--chart-1, #22c55e)" },

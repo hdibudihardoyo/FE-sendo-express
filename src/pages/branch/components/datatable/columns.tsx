@@ -1,6 +1,6 @@
 "use client";
 
-import type { Branch } from "@/lib/api/types/branch";
+import type { Branch } from "@/lib/api";
 import { type ColumnDef } from "@tanstack/react-table";
 import { BranchActionCell } from "./branch-action-cell";
 

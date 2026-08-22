@@ -2,8 +2,8 @@
 import { Badge } from "@/components/ui/badge";
 import { type ColumnDef } from "@tanstack/react-table";
 import { HistoryActionCell } from "./history-action-cell";
-import type { History } from "@/lib/api/types/history";
-import type { DeliveryStatus } from "@/lib/api/types/shipment";
+import type { History } from "@/lib/api";
+import type { DeliveryStatus } from "@/lib/api";
 import {
   getPackageTypeLabel,
   getStatusBadgeVariant,

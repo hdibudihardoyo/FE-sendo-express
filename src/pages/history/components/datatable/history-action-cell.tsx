@@ -1,6 +1,6 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "react-router";
-import type { History } from "@/lib/api/types/history";
+import type { History } from "@/lib/api";
 
 interface HistoryActionCellProps {
   history: History;

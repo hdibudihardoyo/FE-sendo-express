@@ -2,11 +2,11 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import {
   customerDashboard,
   type paramsCustomer,
-} from "@/lib/api/services/dashboard-customer";
+} from "@/lib/api";
 import type {
   ActiveShipmentsResponse,
   shipmentsHistoryResponse,
-} from "@/lib/api/types/dashboard-customer";
+} from "@/lib/api";
 
 const PAGE_MIN = 1;
 const LIMIT_MIN = 1;

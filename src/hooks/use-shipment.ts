@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { shipmentService } from "@/lib/api/services/shipment";
+import { shipmentService } from "@/lib/api";
 import { toast } from "react-hot-toast";
-import type { CreateShipment, ShipmentsParams } from "@/lib/api/types/shipment";
+import type { CreateShipment, ShipmentsParams } from "@/lib/api";
 
 export const shipmentKeys = {
   all: ["shipments"] as const,

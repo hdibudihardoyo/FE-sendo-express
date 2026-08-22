@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { branchSchema, type BranchFormData } from "@/lib/validations/branch";
 import { useUpdateBranch } from "@/hooks/use-branch";
-import type { Branch } from "@/lib/api/types/branch";
+import type { Branch } from "@/lib/api";
 
 interface EditBranchModalProps {
   branch: Branch;

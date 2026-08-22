@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { roleService } from "@/lib/api/services/role";
+import { roleService } from "@/lib/api";
 import { toast } from "react-hot-toast";
-import type { UpdateRoleRequest } from "@/lib/api/types/role";
+import type { UpdateRoleRequest } from "@/lib/api";
 
 export const useRoles = (name?: string) => {
   return useQuery({

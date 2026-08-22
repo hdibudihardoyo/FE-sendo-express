@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Pagination } from "@/lib/api/types";
+import type { Pagination } from "@/lib/api";
 
 interface PaginationControlProps {
   paging: Pagination;

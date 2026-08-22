@@ -1,5 +1,5 @@
 import type { LoginRequest, RegisterRequest } from "@/lib/api";
-import authService, { tokenService } from "@/lib/api/services/auth";
+import { authService, tokenService } from "@/lib/api";
 import { useQueryClient, useQuery, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";

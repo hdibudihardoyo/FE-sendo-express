@@ -19,7 +19,7 @@ import {
   useShipmentHistory,
 } from "@/hooks/use-dashboard-customer";
 import { useTrackShipment } from "@/hooks/use-shipment";
-import type { DeliveryStatus } from "@/lib/api/types/shipment";
+import type { DeliveryStatus } from "@/lib/api";
 import {
   getStatusLabel,
   getStatusBadgeVariant,

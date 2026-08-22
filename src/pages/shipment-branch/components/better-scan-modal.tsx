@@ -34,7 +34,7 @@ import {
   scanShipmentSchema,
   type ScanShipmentFormData,
 } from "@/lib/validations/shipment-branch";
-import type { ShipmentBranch } from "@/lib/api/types/shipment-branch";
+import type { ShipmentBranch } from "@/lib/api";
 import { useScanShipmentBranch } from "@/hooks/use-shipment-branch";
 
 interface BetterScanModalProps {

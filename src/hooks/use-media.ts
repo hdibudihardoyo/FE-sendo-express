@@ -1,4 +1,4 @@
-import { mediaService } from "@/lib/api/services/media";
+import { mediaService } from "@/lib/api";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 

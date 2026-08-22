@@ -24,7 +24,7 @@ import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { Textarea } from "@/components/ui/textarea";
 import { useUserAddress, useUpdateUserAddress } from "@/hooks/use-user-address";
 import { useUploadMedia, useRemoveMedia } from "@/hooks/use-media";
-import type { UpdateUserAddressRequest } from "@/lib/api/types/user-address";
+import type { UpdateUserAddressRequest } from "@/lib/api";
 
 function PageShell({ children }: { children: React.ReactNode }) {
   return (

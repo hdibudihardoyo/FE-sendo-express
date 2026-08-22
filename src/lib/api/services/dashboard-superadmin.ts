@@ -2,7 +2,7 @@ import { apiClient } from "../axios";
 import { handleAxiosError } from "../../utils/error-handler";
 import type { AxiosErrorType } from "../../utils/api-error-types";
 import type {
-  DashboardSummaryResponse,
+  SuperAdminDashboardSummaryResponse,
   DailyRevenueChartResponse,
   VolumeBranchResponse,
   ShipmentStatusDistributionResponse,
@@ -12,9 +12,9 @@ import type {
 } from "../types/dashboard-superadmin";
 
 export const SuperAdminDashboard = {
-  async getDashboardSummary(): Promise<DashboardSummaryResponse> {
+  async getDashboardSummary(): Promise<SuperAdminDashboardSummaryResponse> {
     try {
-      const response = await apiClient.get<DashboardSummaryResponse>(
+      const response = await apiClient.get<SuperAdminDashboardSummaryResponse>(
         "/api/dashboard/superadmin/summary",
       );
       return response.data;

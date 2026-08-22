@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { branchService } from "@/lib/api/services/branch";
+import { branchService } from "@/lib/api";
 import { toast } from "react-hot-toast";
-import type { BranchParams, CreateBranchRequest } from "@/lib/api/types/branch";
+import type { BranchParams, CreateBranchRequest } from "@/lib/api";
 
 // query keys
 export const branchKeys = {

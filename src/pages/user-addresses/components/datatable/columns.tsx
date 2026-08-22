@@ -1,7 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import type { UserAddress } from "@/lib/api/types/user-address";
+import type { UserAddress } from "@/lib/api";
 import { ActionCell } from "./action-cell";
 
 export const createColumns = (

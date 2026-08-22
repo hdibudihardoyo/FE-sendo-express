@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { EditBranchModal } from "../edit-branch-modal";
 import { useState } from "react";
-import type { Branch } from "@/lib/api/types/branch";
+import type { Branch } from "@/lib/api";
 import { PermissionGuard } from "@/components";
 import { useDeleteBranch } from "@/hooks/use-branch";
 import {

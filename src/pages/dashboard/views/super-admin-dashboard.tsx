@@ -36,7 +36,7 @@ import {
   useDashboardAlerts,
 } from "@/hooks/use-dashboard-superadmin";
 import { getStatusLabel, formatPaymentStatus } from "@/lib/utils/status-utils";
-import type { DeliveryStatus, PaymentStatus } from "@/lib/api/types/shipment";
+import type { DeliveryStatus, PaymentStatus } from "@/lib/api";
 
 const DEFAULT_SHIPMENT_LIMIT = 10;
 const DEFAULT_ALERT_LIMIT = 10;

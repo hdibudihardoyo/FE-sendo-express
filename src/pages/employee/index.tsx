@@ -16,7 +16,7 @@ import { PaginationControl } from "@/components/ui/pagination-control";
 import { useDebounce } from "@/hooks/use-debounce";
 import { useSearchParams } from "react-router";
 import { useEffect, useState } from "react";
-import type { EmployeeBranchFilters } from "@/lib/api/types/employee";
+import type { EmployeeBranchFilters } from "@/lib/api";
 import { Loader2 } from "lucide-react";
 
 const DEFAULT_LIMIT = 10;

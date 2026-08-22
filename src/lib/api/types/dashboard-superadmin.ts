@@ -1,6 +1,6 @@
 import type { ApiMeta, Pagination } from "./index";
 
-export interface DashboardSummary {
+export interface SuperAdminDashboardSummary {
   totalShipmentsThisMonth: number;
   totalRevenue: number;
   inTransitPackages: number;
@@ -9,9 +9,9 @@ export interface DashboardSummary {
   activeCouriers: number;
 }
 
-export interface DashboardSummaryResponse {
+export interface SuperAdminDashboardSummaryResponse {
   meta: ApiMeta;
-  data: DashboardSummary;
+  data: SuperAdminDashboardSummary;
 }
 
 export interface DailyRevenueChart {

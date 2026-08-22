@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState, useEffect } from "react";
-import type { Role } from "@/lib/api/types";
+import type { Role } from "@/lib/api";
 import { useUpdateRole } from "@/hooks/use-role";
 import { usePermissionApi } from "@/hooks/use-permission";
 import toast from "react-hot-toast";

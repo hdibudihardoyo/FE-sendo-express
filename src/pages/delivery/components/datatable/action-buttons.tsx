@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Camera, Eye } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
-import type { CourierShipmentListItem } from "@/lib/api/types/delivery";
+import type { CourierShipmentListItem } from "@/lib/api";
 import {
   usePickShipment,
   usePickUpShipment,

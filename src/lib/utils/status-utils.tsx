@@ -1,5 +1,5 @@
 import { Timer, TruckTime, BoxTick, Location, CardPos } from "iconsax-reactjs";
-import type { DeliveryStatus, PaymentStatus } from "@/lib/api/types/shipment";
+import type { DeliveryStatus, PaymentStatus } from "@/lib/api";
 import type { ReactNode } from "react";
 
 type BadgeVariant =

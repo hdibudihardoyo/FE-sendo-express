@@ -2,13 +2,13 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import {
   courierDashboard,
   type paramsCourier,
-} from "@/lib/api/services/dashboard-courier";
+} from "@/lib/api";
 import type {
   DashboardSummaryResponse,
   CourierTaskListResponse,
   CourierRouteMapResponse,
   CourierOnGoingPackagesResponse,
-} from "@/lib/api/types/dashboard-courier";
+} from "@/lib/api";
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 

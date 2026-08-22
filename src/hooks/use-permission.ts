@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "./use-auth";
-import { roleService } from "@/lib/api/services/role";
-import type { Permissions } from "@/lib/api/types/role";
-import { permissionService } from "@/lib/api/services/permission";
+import { roleService } from "@/lib/api";
+import type { Permissions } from "@/lib/api";
+import { permissionService } from "@/lib/api";
 
 export const usePermission = () => {
   const { user } = useAuth();

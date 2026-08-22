@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import type { Shipment, PaymentStatus } from "@/lib/api/types/shipment";
+import type { Shipment, PaymentStatus } from "@/lib/api";
 import {
   getStatusLabel,
   getStatusBadgeVariant,

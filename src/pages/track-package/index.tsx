@@ -20,7 +20,7 @@ import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { useMeta, META_DATA } from "@/hooks/use-meta";
 import { useTrackShipment } from "@/hooks/use-shipment";
-import type { DeliveryStatus } from "@/lib/api/types/shipment";
+import type { DeliveryStatus } from "@/lib/api";
 import {
   getPackageTypeLabel,
   getStatusLabel,

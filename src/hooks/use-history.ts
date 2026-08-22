@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllHistory, getHistoryById } from "@/lib/api/services/history";
-import type { HistoryParams } from "@/lib/api/types/history";
+import { getAllHistory, getHistoryById } from "@/lib/api";
+import type { HistoryParams } from "@/lib/api";
 
 // QUERY KEYS
 export const historyKeys = {

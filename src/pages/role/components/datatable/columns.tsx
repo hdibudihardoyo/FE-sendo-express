@@ -1,7 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import { type Role } from "@/lib/api/types";
+import { type Role } from "@/lib/api";
 import { ActionCell } from "./action-cell";
 import { Badge } from "@/components/ui/badge";
 

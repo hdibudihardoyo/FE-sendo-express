@@ -1,7 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
-import type { EmployeeBranch } from "@/lib/api/types/employee";
+import type { EmployeeBranch } from "@/lib/api";
 import { ActionCell } from "./action-cell";
 
 export const columns = (): ColumnDef<EmployeeBranch>[] => [

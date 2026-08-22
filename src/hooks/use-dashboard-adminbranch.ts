@@ -1,11 +1,11 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { AdminBranchDashboard } from "@/lib/api/services/dashboard-adminbranch";
+import { AdminBranchDashboard } from "@/lib/api";
 import type {
   AdminBranchDashboardSummaryResponse,
   RecentScanLogsResponse,
   ActivityTrendResponse,
   StuckPackagesAlertResponse,
-} from "@/lib/api/types/dashboard-adminbranch";
+} from "@/lib/api";
 
 interface RecentScanLogsParams {
   page?: number;

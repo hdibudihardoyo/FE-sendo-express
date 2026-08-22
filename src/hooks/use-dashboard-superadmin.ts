@@ -1,14 +1,14 @@
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { SuperAdminDashboard } from "@/lib/api/services/dashboard-superadmin";
+import { SuperAdminDashboard } from "@/lib/api";
 import type {
-  DashboardSummaryResponse,
+  SuperAdminDashboardSummaryResponse,
   DailyRevenueChartResponse,
   VolumeBranchResponse,
   ShipmentStatusDistributionResponse,
   BranchPerformanceRankingResponse,
   RecentShipmentsResponse,
   DashboardAlertsResponse,
-} from "@/lib/api/types/dashboard-superadmin";
+} from "@/lib/api";
 
 interface RecentShipmentsParams {
   limit: number;
@@ -122,7 +122,7 @@ export const superAdminDashboardKeys = {
 };
 
 export function useDashboardSummary() {
-  return useQuery<DashboardSummaryResponse, Error>({
+  return useQuery<SuperAdminDashboardSummaryResponse, Error>({
     queryKey: superAdminDashboardKeys.summary(),
     queryFn: () => SuperAdminDashboard.getDashboardSummary(),
     staleTime: 30 * 1000,

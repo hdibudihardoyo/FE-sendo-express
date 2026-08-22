@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { shipmentBranchService } from "@/lib/api/services/shipment-branch";
+import { shipmentBranchService } from "@/lib/api";
 import type {
   ShipmentBranchParams,
   ScanShipmentRequest,
-} from "@/lib/api/types/shipment-branch";
+} from "@/lib/api";
 import { toast } from "react-hot-toast";
 
 export const shipmentBranchKeys = {
